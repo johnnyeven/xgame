@@ -63,7 +63,7 @@ package controllers
 		
 		private function onLoadComplete(evt: LoaderEvent): void
 		{
-			for(var i: uint = 0; i < 1000; i++)
+			for(var i: uint = 0; i < 1; i++)
 			{
 				createPlayer();
 			}
@@ -79,7 +79,8 @@ package controllers
 			_display.y = Math.random() * 600;
 			_display.inUse = true;
 			_display.isLoop = true;
-			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char1");
+			var _index: uint = Math.floor((Math.random() * 14)) + 1;
+			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char" + _index);
 			var _render: Render = new Render();
 			_display.render = _render;
 			_list.push(_display);

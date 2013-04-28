@@ -1,5 +1,7 @@
 package
 {
+	import com.demonsters.debugger.MonsterDebugger;
+	
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.system.Security;
@@ -15,6 +17,8 @@ package
 
 		public function init(evt: Event = null): void
 		{
+			MonsterDebugger.initialize(this);
+			MonsterDebugger.trace(this, "hello world");
 			if(evt)
 			{
 				removeEventListener(Event.ADDED_TO_STAGE, init);
