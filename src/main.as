@@ -6,7 +6,7 @@ package
 	import flash.events.Event;
 	import flash.system.Security;
 	
-	[SWF(width="1028", height="600", backgroundColor="0xffffff",frameRate="30")]
+	[SWF(width="1028", height="600", backgroundColor="0xffffff",frameRate="60")]
 	public class main extends Sprite
 	{
 		public function main()

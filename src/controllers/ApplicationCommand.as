@@ -1,5 +1,16 @@
 package controllers
 {
+	import Box2D.Collision.Shapes.b2CircleShape;
+	import Box2D.Collision.Shapes.b2PolygonShape;
+	import Box2D.Collision.Shapes.b2Shape;
+	import Box2D.Collision.b2AABB;
+	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Dynamics.b2Body;
+	import Box2D.Dynamics.b2BodyDef;
+	import Box2D.Dynamics.b2DebugDraw;
+	import Box2D.Dynamics.b2FixtureDef;
+	import Box2D.Dynamics.b2World;
+	
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.ImageLoader;
 	import com.greensock.loading.LoaderMax;
@@ -21,6 +32,7 @@ package controllers
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
@@ -33,6 +45,9 @@ package controllers
 	{
 		private var _main: main;
 		private var _list: Array;
+		
+		private var world: b2World;
+		private var body: b2Body;
 		public function ApplicationCommand()
 		{
 			super();
@@ -41,20 +56,83 @@ package controllers
 		
 		override public function execute(notification:INotification):void
 		{
-			var _lc: LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain, null);
-			LoaderMax.activate([ImageLoader, SWFLoader]);
-			LoaderMax.defaultContext = _lc;
-			
-			var _loader: XMLLoader = new XMLLoader("config/resources.xml", {name:"resourcesConfig", onComplete:completeHandler});
-			_loader.load();
 			_main = notification.getBody() as main;
 			
 			var _debugLayer: Sprite = new Sprite();
 			var _debugStats: Stats = new Stats();
 			_debugLayer.addChild(_debugStats);
 			_main.stage.addChild(_debugLayer);
-			_main.stage.addEventListener(MouseEvent.CLICK, createPlayer);
+			
+			var g: b2Vec2 = new b2Vec2(0, 20);
+			world = new b2World(g, true);
+			
+			var debugSprite: Sprite = new Sprite();
+			_main.addChild(debugSprite);
+			var debugDraw: b2DebugDraw = new b2DebugDraw();
+			debugDraw.SetSprite(debugSprite);
+			debugDraw.SetDrawScale(30);
+			debugDraw.SetFillAlpha(.7);
+			debugDraw.SetLineThickness(1);
+			debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
+			world.SetDebugDraw(debugDraw);
+			
+//			LDEasyBox2D.createStaticBody(world, 0, _main.stage.stageHeight - 10, _main.stage.stageWidth, 10);
+			LDEasyBox2D.createWrapWall(world, _main.stage);
+			
+			var physicsData: PhysicsData = new PhysicsData();
+			var floor: b2Body = physicsData.createBody("floor", world, b2Body.b2_staticBody, null);
+			var position: b2Vec2 = new b2Vec2(5, 10);
+			floor.SetPosition(position);
+			
+			body = LDEasyBox2D.createBox(world, _main.stage.stageWidth / 2 - 15, _main.stage.stageHeight - 30, 30, 30);
+			
+			_main.addEventListener(Event.ENTER_FRAME, update);
+//			_main.stage.addEventListener(MouseEvent.CLICK, onMouseClick);
+			_main.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
+		
+		private function onKeyDown(evt: KeyboardEvent): void
+		{
+			if(evt.keyCode == 90)
+			{
+				body.ApplyImpulse(new b2Vec2(0, -70), body.GetWorldCenter());
+			}
+			if(evt.keyCode == 37)
+			{
+				body.SetAwake(true);
+				body.SetLinearVelocity(new b2Vec2(-2, 0));
+			}
+			if(evt.keyCode == 39)
+			{
+				body.SetAwake(true);
+				body.SetLinearVelocity(new b2Vec2(2, 0));
+			}
+		}
+		
+		private function update(evt: Event): void
+		{
+			world.Step(1 / 30, 10, 10);
+			
+			world.ClearForces();
+			world.DrawDebugData();
+		}
+		
+//		override public function execute(notification:INotification):void
+//		{
+//			var _lc: LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain, null);
+//			LoaderMax.activate([ImageLoader, SWFLoader]);
+//			LoaderMax.defaultContext = _lc;
+//			
+//			var _loader: XMLLoader = new XMLLoader("config/resources.xml", {name:"resourcesConfig", onComplete:completeHandler});
+//			_loader.load();
+//			_main = notification.getBody() as main;
+//			
+//			var _debugLayer: Sprite = new Sprite();
+//			var _debugStats: Stats = new Stats();
+//			_debugLayer.addChild(_debugStats);
+//			_main.stage.addChild(_debugLayer);
+//			_main.stage.addEventListener(MouseEvent.CLICK, createPlayer);
+//		}
 		
 		private function completeHandler(evt: LoaderEvent): void
 		{
