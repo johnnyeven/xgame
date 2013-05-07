@@ -38,6 +38,8 @@ package controllers
 	import flash.system.LoaderContext;
 	import flash.utils.getTimer;
 	
+	import ldEasyBox2D.LDEasyBox2D;
+	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
@@ -48,6 +50,13 @@ package controllers
 		
 		private var world: b2World;
 		private var body: b2Body;
+		
+		private var _leftArrow: Boolean = false;
+		private var _rightArrow: Boolean = false;
+		private var _jumpArrow: Boolean = false;
+		
+		private var _isAtGround: Boolean = true;
+		
 		public function ApplicationCommand()
 		{
 			super();
@@ -63,49 +72,61 @@ package controllers
 			_debugLayer.addChild(_debugStats);
 			_main.stage.addChild(_debugLayer);
 			
-			var g: b2Vec2 = new b2Vec2(0, 20);
-			world = new b2World(g, true);
+			LDEasyBox2D.initialize(_main.stage);
+			world = LDEasyBox2D.createWorld(0, 20);
 			
 			var debugSprite: Sprite = new Sprite();
 			_main.addChild(debugSprite);
-			var debugDraw: b2DebugDraw = new b2DebugDraw();
-			debugDraw.SetSprite(debugSprite);
-			debugDraw.SetDrawScale(30);
-			debugDraw.SetFillAlpha(.7);
-			debugDraw.SetLineThickness(1);
-			debugDraw.SetFlags(b2DebugDraw.e_shapeBit | b2DebugDraw.e_jointBit);
-			world.SetDebugDraw(debugDraw);
+			LDEasyBox2D.createDebug(debugSprite);
 			
 //			LDEasyBox2D.createStaticBody(world, 0, _main.stage.stageHeight - 10, _main.stage.stageWidth, 10);
-			LDEasyBox2D.createWrapWall(world, _main.stage);
+			LDEasyBox2D.createWrapWall();
 			
 			var physicsData: PhysicsData = new PhysicsData();
 			var floor: b2Body = physicsData.createBody("floor", world, b2Body.b2_staticBody, null);
 			var position: b2Vec2 = new b2Vec2(5, 10);
 			floor.SetPosition(position);
 			
-			body = LDEasyBox2D.createBox(world, _main.stage.stageWidth / 2 - 15, _main.stage.stageHeight - 30, 30, 30);
+			body = LDEasyBox2D.createBox(_main.stage.stageWidth / 2 - 15, _main.stage.stageHeight - 30, 30, 30);
 			
 			_main.addEventListener(Event.ENTER_FRAME, update);
 //			_main.stage.addEventListener(MouseEvent.CLICK, onMouseClick);
 			_main.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			_main.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
 		}
 		
 		private function onKeyDown(evt: KeyboardEvent): void
 		{
 			if(evt.keyCode == 90)
 			{
-				body.ApplyImpulse(new b2Vec2(0, -70), body.GetWorldCenter());
+				_jumpArrow = true;
+				
 			}
 			if(evt.keyCode == 37)
 			{
+				_leftArrow = true;
 				body.SetAwake(true);
-				body.SetLinearVelocity(new b2Vec2(-2, 0));
 			}
 			if(evt.keyCode == 39)
 			{
+				_rightArrow = true;
 				body.SetAwake(true);
-				body.SetLinearVelocity(new b2Vec2(2, 0));
+			}
+		}
+		
+		private function onKeyUp(evt: KeyboardEvent): void
+		{
+			if(evt.keyCode == 90)
+			{
+				_jumpArrow = false;
+			}
+			if(evt.keyCode == 37)
+			{
+				_leftArrow = false;
+			}
+			if(evt.keyCode == 39)
+			{
+				_rightArrow = false;
 			}
 		}
 		
@@ -115,6 +136,29 @@ package controllers
 			
 			world.ClearForces();
 			world.DrawDebugData();
+			
+			if(_jumpArrow)
+			{
+				if(_isAtGround)
+				{
+					_isAtGround = false;
+					body.ApplyImpulse(new b2Vec2(0, -40), body.GetWorldCenter());
+				}
+			}
+			if(_leftArrow)
+			{
+				if(_isAtGround)
+				{
+					body.SetLinearVelocity(new b2Vec2(-5, 0));
+				}
+			}
+			if(_rightArrow)
+			{
+				if(_isAtGround)
+				{
+					body.SetLinearVelocity(new b2Vec2(5, 0));
+				}
+			}
 		}
 		
 //		override public function execute(notification:INotification):void
