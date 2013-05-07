@@ -5,6 +5,7 @@ package controllers
 	import Box2D.Collision.Shapes.b2Shape;
 	import Box2D.Collision.b2AABB;
 	import Box2D.Common.Math.b2Vec2;
+	import Box2D.Common.UserDataBase;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
 	import Box2D.Dynamics.b2DebugDraw;
@@ -55,7 +56,7 @@ package controllers
 		private var _rightArrow: Boolean = false;
 		private var _jumpArrow: Boolean = false;
 		
-		private var _isAtGround: Boolean = true;
+		public static var IsAtGround: Boolean = true;
 		
 		public function ApplicationCommand()
 		{
@@ -86,13 +87,20 @@ package controllers
 			var floor: b2Body = physicsData.createBody("floor", world, b2Body.b2_staticBody, null);
 			var position: b2Vec2 = new b2Vec2(5, 10);
 			floor.SetPosition(position);
+			floor.SetUserData(new UserDataBase({
+				name: "ground"
+			}));
 			
-			body = LDEasyBox2D.createBox(_main.stage.stageWidth / 2 - 15, _main.stage.stageHeight - 30, 30, 30);
+			body = LDEasyBox2D.createBox(_main.stage.stageWidth / 2 - 15, _main.stage.stageHeight - 30, 30, 30, false, false, new UserDataBase({
+				name: "hero"
+			}));
 			
 			_main.addEventListener(Event.ENTER_FRAME, update);
 //			_main.stage.addEventListener(MouseEvent.CLICK, onMouseClick);
 			_main.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 			_main.stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+			
+			world.SetContactListener(new ContactListener());
 		}
 		
 		private function onKeyDown(evt: KeyboardEvent): void
@@ -132,29 +140,26 @@ package controllers
 		
 		private function update(evt: Event): void
 		{
-			world.Step(1 / 30, 10, 10);
-			
-			world.ClearForces();
-			world.DrawDebugData();
+			LDEasyBox2D.updateWorld();
 			
 			if(_jumpArrow)
 			{
-				if(_isAtGround)
+				if(IsAtGround)
 				{
-					_isAtGround = false;
+					IsAtGround = false;
 					body.ApplyImpulse(new b2Vec2(0, -40), body.GetWorldCenter());
 				}
 			}
 			if(_leftArrow)
 			{
-				if(_isAtGround)
+				if(IsAtGround)
 				{
 					body.SetLinearVelocity(new b2Vec2(-5, 0));
 				}
 			}
 			if(_rightArrow)
 			{
-				if(_isAtGround)
+				if(IsAtGround)
 				{
 					body.SetLinearVelocity(new b2Vec2(5, 0));
 				}
