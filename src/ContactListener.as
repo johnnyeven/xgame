@@ -5,6 +5,8 @@ package
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2ContactListener;
 	
+	import controllers.ApplicationCommand;
+	
 	public class ContactListener extends b2ContactListener
 	{
 		public function ContactListener()
@@ -19,6 +21,7 @@ package
 			if(_bodyA.GetUserData().name == "ground" || _bodyB.GetUserData().name == "ground")
 			{
 				trace("ground");
+				ApplicationCommand.IsAtGround = true;
 			}
 		}
 	}

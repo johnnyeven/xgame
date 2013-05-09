@@ -147,7 +147,7 @@ package controllers
 				if(IsAtGround)
 				{
 					IsAtGround = false;
-					body.ApplyImpulse(new b2Vec2(0, -40), body.GetWorldCenter());
+					body.ApplyImpulse(new b2Vec2(0, -70), body.GetWorldCenter());
 				}
 			}
 			if(_leftArrow)
