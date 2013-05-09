@@ -63,10 +63,6 @@ package controllers
 		
 		private function onLoadComplete(evt: LoaderEvent): void
 		{
-			for(var i: uint = 0; i < 1; i++)
-			{
-				createPlayer();
-			}
 			TimerManager.instance.add(33, render);
 		}
 		
