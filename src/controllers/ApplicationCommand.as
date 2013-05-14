@@ -13,6 +13,7 @@ package controllers
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.center.ResourceCenter;
+	import com.xgame.ns.NSCamera;
 	import com.xgame.utils.Reflection;
 	import com.xgame.utils.debug.Stats;
 	import com.xgame.utils.manager.TimerManager;
@@ -58,7 +59,7 @@ package controllers
 		
 		private function completeHandler(evt: LoaderEvent): void
 		{
-			ResourceCenter.instance.load("loginResources", false, "", onLoadComplete);
+			ResourceCenter.instance.load("loginResources", null, onLoadComplete);
 		}
 		
 		private function onLoadComplete(evt: LoaderEvent): void
@@ -73,7 +74,7 @@ package controllers
 			
 			_display.x = Math.random() * 1000;
 			_display.y = Math.random() * 600;
-			_display.inUse = true;
+			_display.NSCamera::inScene = true;
 			_display.isLoop = true;
 			var _index: uint = Math.floor((Math.random() * 14)) + 1;
 			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char" + _index);
