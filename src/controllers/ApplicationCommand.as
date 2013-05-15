@@ -12,7 +12,9 @@ package controllers
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.configuration.GlobalContextConfig;
+	import com.xgame.core.Camera;
 	import com.xgame.core.center.ResourceCenter;
+	import com.xgame.core.scene.Scene;
 	import com.xgame.ns.NSCamera;
 	import com.xgame.utils.Reflection;
 	import com.xgame.utils.debug.Stats;
@@ -33,11 +35,12 @@ package controllers
 	public class ApplicationCommand extends SimpleCommand
 	{
 		private var _main: main;
-		private var _list: Array;
+		private var _scene: Scene;
+//		private var _list: Array;
 		public function ApplicationCommand()
 		{
 			super();
-			_list = new Array();
+//			_list = new Array();
 		}
 		
 		override public function execute(notification:INotification):void
@@ -64,33 +67,35 @@ package controllers
 		
 		private function onLoadComplete(evt: LoaderEvent): void
 		{
-			TimerManager.instance.add(33, render);
+			_scene = new Scene(_main.stage);
+			Camera.initialization(_scene);
+			TimerManager.instance.add(33, _scene.update);
 		}
 		
 		private function createPlayer(evt: Event = null): void
 		{
 			var _display: BitmapMovieDispaly = new BitmapMovieDispaly();
-			_main.addChild(_display);
+//			_main.addChild(_display);
 			
-			_display.x = Math.random() * 1000;
-			_display.y = Math.random() * 600;
-			_display.NSCamera::inScene = true;
+			_display.positionX = Math.random() * 1000;
+			_display.positionY = Math.random() * 600;
 			_display.isLoop = true;
 			var _index: uint = Math.floor((Math.random() * 14)) + 1;
 			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char" + _index);
 			var _render: Render = new Render();
 			_display.render = _render;
-			_list.push(_display);
+			_scene.addObject(_display);
+//			_list.push(_display);
 		}
-		
-		private function render(): void
-		{
-			var _display: BitmapMovieDispaly;
-			for each(_display in _list)
-			{
-				_display.update();
-			}
-			GlobalContextConfig.Timer = getTimer();
-		}
+//		
+//		private function render(): void
+//		{
+//			var _display: BitmapMovieDispaly;
+//			for each(_display in _list)
+//			{
+//				_display.update();
+//			}
+//			GlobalContextConfig.Timer = getTimer();
+//		}
 	}
 }
