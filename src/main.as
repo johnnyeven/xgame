@@ -3,6 +3,8 @@ package
 	import com.demonsters.debugger.MonsterDebugger;
 	
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.system.Security;
 	
@@ -11,6 +13,9 @@ package
 	{
 		public function main()
 		{
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.align = StageAlign.TOP_LEFT;
+			
 			Security.allowDomain("*");
 			init();
 		}

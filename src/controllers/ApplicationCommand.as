@@ -36,6 +36,8 @@ package controllers
 	{
 		private var _main: main;
 		private var _scene: Scene;
+		private var _mouseX: Number;
+		private var _mouseY: Number;
 //		private var _list: Array;
 		public function ApplicationCommand()
 		{
@@ -69,7 +71,47 @@ package controllers
 		{
 			_scene = new Scene(_main.stage);
 			Camera.initialization(_scene);
-			TimerManager.instance.add(33, _scene.update);
+			_scene.initializeMap(1001);
+			TimerManager.instance.add(33, render);
+			
+			_main.stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+			_main.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+		}
+		
+		private function onMouseDown(evt: MouseEvent): void
+		{
+			if(!_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
+			{
+				_main.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			}
+			_mouseX = evt.stageX;
+			_mouseY = evt.stageY;
+		}
+		
+		private function onMouseMove(evt: MouseEvent): void
+		{
+			var offsetX: Number = _mouseX - evt.stageX;
+			var offsetY: Number = _mouseY - evt.stageY;
+			Camera.instance.x += offsetX;
+			Camera.instance.y += offsetY;
+			_mouseX = evt.stageX;
+			_mouseY = evt.stageY;
+		}
+		
+		private function onMouseUp(evt: MouseEvent): void
+		{
+			if(_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
+			{
+				_main.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+			}
+		}
+		
+		private function render(): void
+		{
+			if(_scene.initialized)
+			{
+				_scene.update();
+			}
 		}
 		
 		private function createPlayer(evt: Event = null): void
