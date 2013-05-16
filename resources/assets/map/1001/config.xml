@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<map>
+	<id>1001</id>
+	<tileNumWidth>15</tileNumWidth>
+	<tileNumHeight>15</tileNumHeight>
+	<tileWidth>334</tileWidth>
+	<tileHeight>226</tileHeight>
+	<blockWidth>50</blockWidth>
+	<blockHeight>34</blockHeight>
+	<startTileX>90</startTileX>
+	<startTileY>80</startTileY>
+	<radiansOffsetX>70</radiansOffsetX>
+	<radiansOffsetY>100</radiansOffsetY>
+	<thumbnail>thumbnail.jpg</thumbnail>
+</map>
