@@ -13,8 +13,8 @@ package
 	{
 		public function main()
 		{
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-			stage.align = StageAlign.TOP_LEFT;
+//			stage.scaleMode = StageScaleMode.NO_SCALE;
+//			stage.align = StageAlign.TOP_LEFT;
 			
 			Security.allowDomain("*");
 			init();
