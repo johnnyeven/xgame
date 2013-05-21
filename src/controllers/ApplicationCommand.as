@@ -71,7 +71,7 @@ package controllers
 		{
 			_scene = new Scene(_main.stage);
 			Camera.initialization(_scene);
-			_scene.initializeMap(1001);
+			_scene.initializeMap(1003);
 			TimerManager.instance.add(33, render);
 			
 			_main.stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -117,7 +117,6 @@ package controllers
 		private function createPlayer(evt: Event = null): void
 		{
 			var _display: BitmapMovieDispaly = new BitmapMovieDispaly();
-//			_main.addChild(_display);
 			
 			_display.positionX = Math.random() * 1000;
 			_display.positionY = Math.random() * 600;
