@@ -6,6 +6,7 @@ package controllers
 	import com.greensock.loading.SWFLoader;
 	import com.greensock.loading.XMLLoader;
 	import com.greensock.loading.core.LoaderCore;
+	import com.xgame.common.behavior.Behavior;
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
 	import com.xgame.common.display.ResourceData;
@@ -38,11 +39,11 @@ package controllers
 		private var _scene: Scene;
 		private var _mouseX: Number;
 		private var _mouseY: Number;
-//		private var _list: Array;
+		private var _gameLayer: Sprite;
+		
 		public function ApplicationCommand()
 		{
 			super();
-//			_list = new Array();
 		}
 		
 		override public function execute(notification:INotification):void
@@ -55,11 +56,13 @@ package controllers
 			_loader.load();
 			_main = notification.getBody() as main;
 			
+			_gameLayer = new Sprite();
+			_main.stage.addChild(_gameLayer);
+			
 			var _debugLayer: Sprite = new Sprite();
 			var _debugStats: Stats = new Stats();
 			_debugLayer.addChild(_debugStats);
 			_main.stage.addChild(_debugLayer);
-			_main.stage.addEventListener(MouseEvent.CLICK, createPlayer);
 		}
 		
 		private function completeHandler(evt: LoaderEvent): void
@@ -69,42 +72,43 @@ package controllers
 		
 		private function onLoadComplete(evt: LoaderEvent): void
 		{
-			_scene = new Scene(_main.stage);
+			_scene = new Scene(_main.stage, _gameLayer);
 			Camera.initialization(_scene);
 			_scene.initializeMap(1003);
 			TimerManager.instance.add(33, render);
 			
-			_main.stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			_main.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+			_main.stage.addEventListener(MouseEvent.CLICK, createPlayer);
+//			_main.stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+//			_main.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
-		private function onMouseDown(evt: MouseEvent): void
-		{
-			if(!_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
-			{
-				_main.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			}
-			_mouseX = evt.stageX;
-			_mouseY = evt.stageY;
-		}
-		
-		private function onMouseMove(evt: MouseEvent): void
-		{
-			var offsetX: Number = _mouseX - evt.stageX;
-			var offsetY: Number = _mouseY - evt.stageY;
-			Camera.instance.x += offsetX;
-			Camera.instance.y += offsetY;
-			_mouseX = evt.stageX;
-			_mouseY = evt.stageY;
-		}
-		
-		private function onMouseUp(evt: MouseEvent): void
-		{
-			if(_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
-			{
-				_main.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			}
-		}
+//		private function onMouseDown(evt: MouseEvent): void
+//		{
+//			if(!_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
+//			{
+//				_main.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+//			}
+//			_mouseX = evt.stageX;
+//			_mouseY = evt.stageY;
+//		}
+//		
+//		private function onMouseMove(evt: MouseEvent): void
+//		{
+//			var offsetX: Number = _mouseX - evt.stageX;
+//			var offsetY: Number = _mouseY - evt.stageY;
+//			Camera.instance.x += offsetX;
+//			Camera.instance.y += offsetY;
+//			_mouseX = evt.stageX;
+//			_mouseY = evt.stageY;
+//		}
+//		
+//		private function onMouseUp(evt: MouseEvent): void
+//		{
+//			if(_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
+//			{
+//				_main.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+//			}
+//		}
 		
 		private function render(): void
 		{
@@ -116,27 +120,16 @@ package controllers
 		
 		private function createPlayer(evt: Event = null): void
 		{
-			var _display: BitmapMovieDispaly = new BitmapMovieDispaly();
+			var _display: BitmapMovieDispaly = new BitmapMovieDispaly(new Behavior());
 			
-			_display.positionX = Math.random() * 1000;
-			_display.positionY = Math.random() * 600;
+			_display.positionX = 20;
+			_display.positionY = 20;
 			_display.isLoop = true;
 			var _index: uint = Math.floor((Math.random() * 14)) + 1;
 			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char" + _index);
 			var _render: Render = new Render();
 			_display.render = _render;
 			_scene.addObject(_display);
-//			_list.push(_display);
 		}
-//		
-//		private function render(): void
-//		{
-//			var _display: BitmapMovieDispaly;
-//			for each(_display in _list)
-//			{
-//				_display.update();
-//			}
-//			GlobalContextConfig.Timer = getTimer();
-//		}
 	}
 }
