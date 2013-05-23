@@ -133,6 +133,7 @@ package controllers
 			_scene.addObject(_display);
 			
 			_display.action = Action.MOVE;
+			Camera.instance.focus = _display;
 		}
 	}
 }
