@@ -7,6 +7,7 @@ package controllers
 	import com.greensock.loading.XMLLoader;
 	import com.greensock.loading.core.LoaderCore;
 	import com.xgame.common.behavior.Behavior;
+	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
 	import com.xgame.common.display.ResourceData;
@@ -16,6 +17,7 @@ package controllers
 	import com.xgame.core.Camera;
 	import com.xgame.core.center.ResourceCenter;
 	import com.xgame.core.scene.Scene;
+	import com.xgame.enum.Action;
 	import com.xgame.ns.NSCamera;
 	import com.xgame.utils.Reflection;
 	import com.xgame.utils.debug.Stats;
@@ -120,16 +122,17 @@ package controllers
 		
 		private function createPlayer(evt: Event = null): void
 		{
-			var _display: BitmapMovieDispaly = new BitmapMovieDispaly(new Behavior());
+			var _display: ActionDisplay = new ActionDisplay(new Behavior());
 			
-			_display.positionX = 20;
-			_display.positionY = 20;
+			_display.positionX = 700;
+			_display.positionY = 500;
 			_display.isLoop = true;
-			var _index: uint = Math.floor((Math.random() * 14)) + 1;
-			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char" + _index);
+			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char1");
 			var _render: Render = new Render();
 			_display.render = _render;
 			_scene.addObject(_display);
+			
+			_display.action = Action.MOVE;
 		}
 	}
 }
