@@ -18,6 +18,8 @@ package controllers
 	import com.xgame.core.center.ResourceCenter;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.enum.Action;
+	import com.xgame.enum.Direction;
+	import com.xgame.events.scene.SceneEvent;
 	import com.xgame.ns.NSCamera;
 	import com.xgame.utils.Reflection;
 	import com.xgame.utils.debug.Stats;
@@ -42,6 +44,7 @@ package controllers
 		private var _mouseX: Number;
 		private var _mouseY: Number;
 		private var _gameLayer: Sprite;
+		private var _player: ActionDisplay;
 		
 		public function ApplicationCommand()
 		{
@@ -76,64 +79,42 @@ package controllers
 		{
 			_scene = new Scene(_main.stage, _gameLayer);
 			Camera.initialization(_scene);
+			_scene.addEventListener(SceneEvent.SCENE_READY, onSceneReady);
 			_scene.initializeMap(1003);
-			TimerManager.instance.add(33, render);
-			
-			_main.stage.addEventListener(MouseEvent.CLICK, createPlayer);
-//			_main.stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-//			_main.stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
 		}
 		
-//		private function onMouseDown(evt: MouseEvent): void
-//		{
-//			if(!_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
-//			{
-//				_main.stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-//			}
-//			_mouseX = evt.stageX;
-//			_mouseY = evt.stageY;
-//		}
-//		
-//		private function onMouseMove(evt: MouseEvent): void
-//		{
-//			var offsetX: Number = _mouseX - evt.stageX;
-//			var offsetY: Number = _mouseY - evt.stageY;
-//			Camera.instance.x += offsetX;
-//			Camera.instance.y += offsetY;
-//			_mouseX = evt.stageX;
-//			_mouseY = evt.stageY;
-//		}
-//		
-//		private function onMouseUp(evt: MouseEvent): void
-//		{
-//			if(_main.stage.hasEventListener(MouseEvent.MOUSE_MOVE))
-//			{
-//				_main.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-//			}
-//		}
+		private function onSceneReady(evt: SceneEvent): void
+		{
+			_scene.removeEventListener(SceneEvent.SCENE_READY, onSceneReady);
+			TimerManager.instance.add(33, render);
+			_main.stage.addEventListener(MouseEvent.CLICK, onClick);
+			createPlayer();
+		}
 		
 		private function render(): void
 		{
-			if(_scene.initialized)
-			{
-				_scene.update();
-			}
+			_scene.update();
 		}
 		
-		private function createPlayer(evt: Event = null): void
+		private function createPlayer(): void
 		{
-			var _display: ActionDisplay = new ActionDisplay(new Behavior());
+			_player = new ActionDisplay(new Behavior());
 			
-			_display.positionX = 700;
-			_display.positionY = 500;
-			_display.isLoop = true;
-			_display.graphic = ResourcePool.instance.getResourceData("assets.character.char1");
+			_player.positionX = 700;
+			_player.positionY = 500;
+			_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
 			var _render: Render = new Render();
-			_display.render = _render;
-			_scene.addObject(_display);
+			_player.render = _render;
+			_scene.addObject(_player);
+			_player.direction = Direction.RIGHT;
 			
-			_display.action = Action.MOVE;
-			Camera.instance.focus = _display;
+			Camera.instance.focus = _player;
+		}
+		
+		private function onClick(evt: Event = null): void
+		{
+			_player.action = Action.MOVE;
+			_player.direction = Direction.LEFT;
 		}
 	}
 }
