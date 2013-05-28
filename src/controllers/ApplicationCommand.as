@@ -7,6 +7,7 @@ package controllers
 	import com.greensock.loading.XMLLoader;
 	import com.greensock.loading.core.LoaderCore;
 	import com.xgame.common.behavior.Behavior;
+	import com.xgame.common.behavior.MainPlayerBehavior;
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
@@ -77,7 +78,7 @@ package controllers
 		
 		private function onLoadComplete(evt: LoaderEvent): void
 		{
-			_scene = new Scene(_main.stage, _gameLayer);
+			_scene = Scene.initialization(_main.stage, _gameLayer);
 			Camera.initialization(_scene);
 			_scene.addEventListener(SceneEvent.SCENE_READY, onSceneReady);
 			_scene.initializeMap(1003);
@@ -87,7 +88,6 @@ package controllers
 		{
 			_scene.removeEventListener(SceneEvent.SCENE_READY, onSceneReady);
 			TimerManager.instance.add(33, render);
-			_main.stage.addEventListener(MouseEvent.CLICK, onClick);
 			createPlayer();
 		}
 		
@@ -98,7 +98,7 @@ package controllers
 		
 		private function createPlayer(): void
 		{
-			_player = new ActionDisplay(new Behavior());
+			_player = new ActionDisplay(new MainPlayerBehavior());
 			
 			_player.positionX = 700;
 			_player.positionY = 500;
@@ -106,15 +106,8 @@ package controllers
 			var _render: Render = new Render();
 			_player.render = _render;
 			_scene.addObject(_player);
-			_player.direction = Direction.RIGHT;
 			
 			Camera.instance.focus = _player;
-		}
-		
-		private function onClick(evt: Event = null): void
-		{
-			_player.action = Action.MOVE;
-			_player.direction = Direction.LEFT;
 		}
 	}
 }
