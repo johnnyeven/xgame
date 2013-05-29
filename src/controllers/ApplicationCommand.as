@@ -99,9 +99,9 @@ package controllers
 		private function createPlayer(): void
 		{
 			_player = new ActionDisplay(new MainPlayerBehavior());
-			
+			_player.speed = 7;
 			_player.positionX = 700;
-			_player.positionY = 500;
+			_player.positionY = 700;
 			_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
 			var _render: Render = new Render();
 			_player.render = _render;

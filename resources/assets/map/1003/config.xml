@@ -4,8 +4,8 @@
   <height>1920</height>
   <tileNumWidth>10</tileNumWidth>
   <tileNumHeight>8</tileNumHeight>
-  <blockNumWidth>25</blockNumWidth>
-  <blockNumHeight>25</blockNumHeight>
+  <blockNumWidth>50</blockNumWidth>
+  <blockNumHeight>50</blockNumHeight>
   <startTileX>90</startTileX>
   <startTileY>80</startTileY>
 </map>
