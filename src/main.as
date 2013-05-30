@@ -1,7 +1,5 @@
 package
 {
-	import com.demonsters.debugger.MonsterDebugger;
-	
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
@@ -22,7 +20,6 @@ package
 
 		public function init(evt: Event = null): void
 		{
-			MonsterDebugger.initialize(this);
 			if(evt)
 			{
 				removeEventListener(Event.ADDED_TO_STAGE, init);
