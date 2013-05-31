@@ -81,7 +81,7 @@ package controllers
 			_scene = Scene.initialization(_main.stage, _gameLayer);
 			Camera.initialization(_scene);
 			_scene.addEventListener(SceneEvent.SCENE_READY, onSceneReady);
-			_scene.initializeMap(1001);
+			_scene.initializeMap(1003);
 		}
 		
 		private function onSceneReady(evt: SceneEvent): void
