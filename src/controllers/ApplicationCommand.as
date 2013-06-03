@@ -11,6 +11,7 @@ package controllers
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
+	import com.xgame.common.display.CharacterDisplay;
 	import com.xgame.common.display.ResourceData;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
@@ -98,7 +99,7 @@ package controllers
 		
 		private function createPlayer(): void
 		{
-			_player = new ActionDisplay(new MainPlayerBehavior());
+			_player = new CharacterDisplay(new MainPlayerBehavior());
 			_player.speed = 7;
 			_player.positionX = 700;
 			_player.positionY = 700;
