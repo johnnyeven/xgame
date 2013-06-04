@@ -12,6 +12,7 @@ package controllers
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
 	import com.xgame.common.display.CharacterDisplay;
+	import com.xgame.common.display.MonsterDisplay;
 	import com.xgame.common.display.ResourceData;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
@@ -100,7 +101,7 @@ package controllers
 		
 		private function createMonster(): void
 		{
-			var _monster: ActionDisplay = new ActionDisplay(new Behavior());
+			var _monster: MonsterDisplay = new MonsterDisplay();
 			_monster.speed = 7;
 			_monster.positionX = 800;
 			_monster.positionY = 600;
@@ -108,13 +109,15 @@ package controllers
 			var _render: Render = new Render();
 			_monster.render = _render;
 			_scene.addObject(_monster);
-			_monster.followDistance = 50;
-			_monster.follow = _player;
+			_monster.attackSpeed = .7;
+			_monster.attackRange = 60;
+			
+//			_monster.prepareAttack(_player);
 		}
 		
 		private function createPlayer(): void
 		{
-			_player = new CharacterDisplay(new MainPlayerBehavior());
+			_player = new CharacterDisplay();
 			_player.speed = 7;
 			_player.positionX = 700;
 			_player.positionY = 700;
