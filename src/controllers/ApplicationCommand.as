@@ -89,8 +89,8 @@ package controllers
 		{
 			_scene.removeEventListener(SceneEvent.SCENE_READY, onSceneReady);
 			TimerManager.instance.add(33, render);
-			createMonster();
 			createPlayer();
+			createMonster();
 		}
 		
 		private function render(): void
@@ -104,10 +104,12 @@ package controllers
 			_monster.speed = 7;
 			_monster.positionX = 800;
 			_monster.positionY = 600;
-			_monster.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
+			_monster.graphic = ResourcePool.instance.getResourceData("assets.character.char5");
 			var _render: Render = new Render();
 			_monster.render = _render;
 			_scene.addObject(_monster);
+			_monster.followDistance = 50;
+			_monster.follow = _player;
 		}
 		
 		private function createPlayer(): void
