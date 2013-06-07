@@ -6,7 +6,7 @@
 	public class prepareSkill_0 extends BitmapData {
 		public var frameLine: uint = 1;
 		public var frameTotal: uint = 6;
-		public var fps: Number = 30;
+		public var fps: Number = 20;
 		
 		
 		public function prepareSkill_0(_width: uint, _height: uint) {
