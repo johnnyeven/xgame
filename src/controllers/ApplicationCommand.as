@@ -8,6 +8,7 @@ package controllers
 	import com.greensock.loading.core.LoaderCore;
 	import com.xgame.common.behavior.Behavior;
 	import com.xgame.common.behavior.MainPlayerBehavior;
+	import com.xgame.common.behavior.MonsterBehavior;
 	import com.xgame.common.display.ActionDisplay;
 	import com.xgame.common.display.BitmapDisplay;
 	import com.xgame.common.display.BitmapMovieDispaly;
@@ -47,7 +48,7 @@ package controllers
 		private var _mouseX: Number;
 		private var _mouseY: Number;
 		private var _gameLayer: Sprite;
-		private var _player: ActionDisplay;
+		private var _player: CharacterDisplay;
 		
 		public function ApplicationCommand()
 		{
@@ -111,6 +112,9 @@ package controllers
 			_scene.addObject(_monster);
 			_monster.attackSpeed = .7;
 			_monster.attackRange = 60;
+			(_monster.behavior as MonsterBehavior).moveToPosition(2096, 1170);
+			
+			_player.locker = _monster;
 			
 //			_monster.prepareAttack(_player);
 		}
