@@ -115,8 +115,6 @@ package controllers
 			(_monster.behavior as MonsterBehavior).moveToPosition(2096, 1170);
 			
 			_player.locker = _monster;
-			
-//			_monster.prepareAttack(_player);
 		}
 		
 		private function createPlayer(): void
