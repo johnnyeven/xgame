@@ -127,6 +127,7 @@ package controllers
 			var _render: Render = new Render();
 			_player.render = _render;
 			_scene.addObject(_player);
+			_scene.player = _player;
 			
 			Camera.instance.focus = _player;
 		}
