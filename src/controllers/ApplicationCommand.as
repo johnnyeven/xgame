@@ -112,7 +112,7 @@ package controllers
 			_scene.addObject(_monster);
 			_monster.attackSpeed = .7;
 			_monster.attackRange = 60;
-			(_monster.behavior as MonsterBehavior).moveToPosition(2096, 1170);
+//			(_monster.behavior as MonsterBehavior).moveToPosition(2096, 1170);
 			
 			_player.locker = _monster;
 		}
