@@ -19,6 +19,7 @@ package controllers
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.Camera;
+	import com.xgame.core.center.HotkeyCenter;
 	import com.xgame.core.center.ResourceCenter;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.enum.Action;
@@ -40,6 +41,8 @@ package controllers
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
+	
+	import skill.Skill1;
 	
 	public class ApplicationCommand extends SimpleCommand
 	{
@@ -93,6 +96,7 @@ package controllers
 			TimerManager.instance.add(33, render);
 			createPlayer();
 			createMonster();
+			bindHotkey();
 		}
 		
 		private function render(): void
@@ -130,6 +134,11 @@ package controllers
 			_scene.player = _player;
 			
 			Camera.instance.focus = _player;
+		}
+		
+		private function bindHotkey(): void
+		{
+			HotkeyCenter.instance.bind(112, "skill1", Skill1);
 		}
 	}
 }
