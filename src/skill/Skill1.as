@@ -35,20 +35,20 @@ package skill
 			prepareSkill(skillId, skillTarget);
 		}
 		
-		public static function prepareSkill(skillId: String, target: *): void
+		protected static function prepareSkill(skillId: String, target: *): void
 		{
 			var effect: SingEffectDisplay = new SingEffectDisplay(skillId, target);
 			effect.owner = Scene.instance.player;
 			effect.graphic = ResourcePool.instance.getResourceData("assets.skill.prepareSkill");
 			effect.singTime = 1000;
 			effect.render = new Render();
-			effect.addEventListener(SkillEvent.SING_COMPLETE, onFire, false, 0, true);
+			effect.addEventListener(SkillEvent.SING_COMPLETE, skillFire, false, 0, true);
 			Scene.instance.player.addDisplay(effect);
 		}
 		
-		protected static function onFire(evt: SkillEvent): void
+		protected static function skillFire(evt: SkillEvent): void
 		{
-			(evt.currentTarget as SingEffectDisplay).removeEventListener(SkillEvent.SING_COMPLETE, onFire);
+			(evt.currentTarget as SingEffectDisplay).removeEventListener(SkillEvent.SING_COMPLETE, skillFire);
 			
 			var tracker: TrackEffectDisplay;
 			for(var i: int = 0; i < 5; i++)
@@ -57,7 +57,7 @@ package skill
 				tracker.owner = Scene.instance.player;
 				tracker.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_FIRE");
 				tracker.render = new Render();
-				tracker.addEventListener(SkillEvent.FIRE_COMPLETE, onExplode, false, 0, true);
+				tracker.addEventListener(SkillEvent.FIRE_COMPLETE, skillExplode, false, 0, true);
 				Scene.instance.addObject(tracker);
 			}
 			//			var sheild: StatusEffectDisplay = new StatusEffectDisplay(evt.skillId, evt.skillTarget);
@@ -67,10 +67,10 @@ package skill
 			//			_target.addDisplay(sheild);
 		}
 		
-		protected static function onExplode(evt: SkillEvent): void
+		protected static function skillExplode(evt: SkillEvent): void
 		{
 			Debug.info(evt.currentTarget, evt.currentTarget.name);
-			(evt.currentTarget as TrackEffectDisplay).removeEventListener(SkillEvent.FIRE_COMPLETE, onExplode);
+			(evt.currentTarget as TrackEffectDisplay).removeEventListener(SkillEvent.FIRE_COMPLETE, skillExplode);
 			var explode: AutoRemoveEffectDisplay = new AutoRemoveEffectDisplay(evt.skillId, evt.skillTarget);
 			explode.owner = Scene.instance.player;
 			explode.graphic = ResourcePool.instance.getResourceData("assets.skill." + evt.skillId + "_EXPLODE");
@@ -79,6 +79,49 @@ package skill
 			if(evt.skillTarget is BitmapDisplay)
 			{
 				(evt.skillTarget as BitmapDisplay).addDisplay(explode);
+			}
+			else
+			{
+				Scene.instance.addObject(explode);
+			}
+		}
+		
+		public static function showSkillPrepare(owner: BitmapDisplay, skillId: String, target: *): void
+		{
+			var effect: SingEffectDisplay = new SingEffectDisplay(skillId, target);
+			effect.owner = owner;
+			effect.graphic = ResourcePool.instance.getResourceData("assets.skill.prepareSkill");
+			effect.singTime = 1000;
+			effect.render = new Render();
+//			effect.addEventListener(SkillEvent.SING_COMPLETE, skillFire, false, 0, true);
+			owner.addDisplay(effect);
+		}
+		
+		public static function showSkillFire(owner: BitmapDisplay, skillId: String, target: *): void
+		{
+			var tracker: TrackEffectDisplay;
+			for(var i: int = 0; i < 5; i++)
+			{
+				tracker = new TrackEffectDisplay(skillId, target, new Point(owner.positionX, owner.positionY), .1, i);
+				tracker.owner = owner;
+				tracker.graphic = ResourcePool.instance.getResourceData("assets.skill." + skillId + "_FIRE");
+				tracker.render = new Render();
+//				tracker.addEventListener(SkillEvent.FIRE_COMPLETE, skillExplode, false, 0, true);
+				Scene.instance.addObject(tracker);
+			}
+		}
+		
+		public static function showSkillExplode(owner: BitmapDisplay, skillId: String, target: *): void
+		{
+			Debug.info(target, target.name);
+			var explode: AutoRemoveEffectDisplay = new AutoRemoveEffectDisplay(skillId, target);
+			explode.owner = owner;
+			explode.graphic = ResourcePool.instance.getResourceData("assets.skill." + skillId + "_EXPLODE");
+			explode.render = new Render();
+			
+			if(target is BitmapDisplay)
+			{
+				(target as BitmapDisplay).addDisplay(explode);
 			}
 			else
 			{

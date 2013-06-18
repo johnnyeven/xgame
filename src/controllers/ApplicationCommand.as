@@ -42,6 +42,7 @@ package controllers
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
+	import skill.Sheild1;
 	import skill.Skill1;
 	
 	public class ApplicationCommand extends SimpleCommand
@@ -116,7 +117,9 @@ package controllers
 			_scene.addObject(_monster);
 			_monster.attackSpeed = .7;
 			_monster.attackRange = 60;
-//			(_monster.behavior as MonsterBehavior).moveToPosition(2096, 1170);
+			_monster.locker = _player;
+			
+			Sheild1.showSkillPrepare(_monster, "sheild1", _monster);
 			
 			_player.locker = _monster;
 		}
