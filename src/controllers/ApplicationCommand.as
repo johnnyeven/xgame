@@ -119,7 +119,7 @@ package controllers
 			_monster.attackRange = 60;
 			_monster.locker = _player;
 			
-			Sheild1.showSkillPrepare(_monster, "sheild1", _monster);
+			Sheild1.showSkillFire(_monster, "sheild1", _monster);
 			
 			_player.locker = _monster;
 		}
