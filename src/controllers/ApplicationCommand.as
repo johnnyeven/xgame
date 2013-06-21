@@ -65,83 +65,112 @@ package controllers
 			LoaderMax.activate([ImageLoader, SWFLoader]);
 			LoaderMax.defaultContext = _lc;
 			
-			var _loader: XMLLoader = new XMLLoader("config/resources.xml", {name:"resourcesConfig", onComplete:completeHandler});
-			_loader.load();
-			_main = notification.getBody() as main;
+			initCommand();
+			initMediator();
+			initProxy();
+//			HotkeyCenter.instance.bind(112, "skill1", Skill1);
+//			HotkeyCenter.instance.bind(113, "sheild1", Sheild1);
+		}
+		
+		private function initCommand(): void
+		{
 			
-			_gameLayer = new Sprite();
-			_main.stage.addChild(_gameLayer);
+		}
+		
+		private function initMediator(): void
+		{
 			
-			var _debugLayer: Sprite = new Sprite();
-			var _debugStats: Stats = new Stats();
-			_debugLayer.addChild(_debugStats);
-			_main.stage.addChild(_debugLayer);
 		}
 		
-		private function completeHandler(evt: LoaderEvent): void
+		private function initProxy(): void
 		{
-			ResourceCenter.instance.load("loginResources", null, onLoadComplete);
-		}
-		
-		private function onLoadComplete(evt: LoaderEvent): void
-		{
-			_scene = Scene.initialization(_main.stage, _gameLayer);
-			Camera.initialization(_scene);
-			_scene.addEventListener(SceneEvent.SCENE_READY, onSceneReady);
-			_scene.initializeMap(1003);
-		}
-		
-		private function onSceneReady(evt: SceneEvent): void
-		{
-			_scene.removeEventListener(SceneEvent.SCENE_READY, onSceneReady);
-			TimerManager.instance.add(33, render);
-			createPlayer();
-			createMonster();
-			bindHotkey();
-		}
-		
-		private function render(): void
-		{
-			_scene.update();
-		}
-		
-		private function createMonster(): void
-		{
-			var _monster: MonsterDisplay = new MonsterDisplay();
-			_monster.speed = 7;
-			_monster.positionX = 800;
-			_monster.positionY = 600;
-			_monster.graphic = ResourcePool.instance.getResourceData("assets.character.char5");
-			var _render: Render = new Render();
-			_monster.render = _render;
-			_scene.addObject(_monster);
-			_monster.attackSpeed = .7;
-			_monster.attackRange = 60;
-			_monster.locker = _player;
 			
-			Sheild1.showSkillFire(_monster, "sheild1", _monster);
-			
-			_player.locker = _monster;
 		}
 		
-		private function createPlayer(): void
-		{
-			_player = new CharacterDisplay();
-			_player.speed = 7;
-			_player.positionX = 700;
-			_player.positionY = 700;
-			_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
-			var _render: Render = new Render();
-			_player.render = _render;
-			_scene.addObject(_player);
-			_scene.player = _player;
-			
-			Camera.instance.focus = _player;
-		}
-		
-		private function bindHotkey(): void
-		{
-			HotkeyCenter.instance.bind(112, "skill1", Skill1);
-		}
+//		override public function execute(notification:INotification):void
+//		{
+//			var _lc: LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain, null);
+//			LoaderMax.activate([ImageLoader, SWFLoader]);
+//			LoaderMax.defaultContext = _lc;
+//			
+//			var _loader: XMLLoader = new XMLLoader("config/resources.xml", {name:"resourcesConfig", onComplete:completeHandler});
+//			_loader.load();
+//			_main = notification.getBody() as main;
+//			
+//			_gameLayer = new Sprite();
+//			_main.stage.addChild(_gameLayer);
+//			
+//			var _debugLayer: Sprite = new Sprite();
+//			var _debugStats: Stats = new Stats();
+//			_debugLayer.addChild(_debugStats);
+//			_main.stage.addChild(_debugLayer);
+//		}
+//		
+//		private function completeHandler(evt: LoaderEvent): void
+//		{
+//			ResourceCenter.instance.load("loginResources", null, onLoadComplete);
+//		}
+//		
+//		private function onLoadComplete(evt: LoaderEvent): void
+//		{
+//			_scene = Scene.initialization(_main.stage, _gameLayer);
+//			Camera.initialization(_scene);
+//			_scene.addEventListener(SceneEvent.SCENE_READY, onSceneReady);
+//			_scene.initializeMap(1003);
+//		}
+//		
+//		private function onSceneReady(evt: SceneEvent): void
+//		{
+//			_scene.removeEventListener(SceneEvent.SCENE_READY, onSceneReady);
+//			TimerManager.instance.add(33, render);
+//			bindHotkey();
+//			createPlayer();
+//			createMonster();
+//		}
+//		
+//		private function render(): void
+//		{
+//			_scene.update();
+//		}
+//		
+//		private function createMonster(): void
+//		{
+//			var _monster: MonsterDisplay = new MonsterDisplay();
+//			_monster.speed = 7;
+//			_monster.positionX = 800;
+//			_monster.positionY = 600;
+//			_monster.graphic = ResourcePool.instance.getResourceData("assets.character.char5");
+//			var _render: Render = new Render();
+//			_monster.render = _render;
+//			_scene.addObject(_monster);
+//			_monster.attackSpeed = .7;
+//			_monster.attackRange = 60;
+//			_monster.locker = _player;
+//			
+//			Sheild1.showSkillFire(_monster, "sheild1", _monster);
+//			
+//			_player.locker = _monster;
+//		}
+//		
+//		private function createPlayer(): void
+//		{
+//			_player = new CharacterDisplay();
+//			_player.speed = 7;
+//			_player.positionX = 700;
+//			_player.positionY = 700;
+//			_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
+//			var _render: Render = new Render();
+//			_player.render = _render;
+//			_scene.addObject(_player);
+//			_scene.player = _player;
+//			
+//			Camera.instance.focus = _player;
+//		}
+//		
+//		private function bindHotkey(): void
+//		{
+//			HotkeyCenter.instance.bind(112, "skill1", Skill1);
+//			HotkeyCenter.instance.bind(113, "sheild1", Sheild1);
+//		}
 	}
 }
