@@ -30,6 +30,8 @@ package controllers
 	import com.xgame.utils.debug.Stats;
 	import com.xgame.utils.manager.TimerManager;
 	
+	import controllers.init.LoadResourcesConfigCommand;
+	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
@@ -38,6 +40,9 @@ package controllers
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	import flash.utils.getTimer;
+	
+	import mediators.MainMediator;
+	import mediators.loader.ProgressBarMediator;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
@@ -51,8 +56,6 @@ package controllers
 		private var _scene: Scene;
 		private var _mouseX: Number;
 		private var _mouseY: Number;
-		private var _gameLayer: Sprite;
-		private var _player: CharacterDisplay;
 		
 		public function ApplicationCommand()
 		{
@@ -65,21 +68,26 @@ package controllers
 			LoaderMax.activate([ImageLoader, SWFLoader]);
 			LoaderMax.defaultContext = _lc;
 			
+			_main = notification.getBody() as main;
+			
 			initCommand();
 			initMediator();
 			initProxy();
 //			HotkeyCenter.instance.bind(112, "skill1", Skill1);
 //			HotkeyCenter.instance.bind(113, "sheild1", Sheild1);
+			
+			facade.sendNotification(LoadResourcesConfigCommand.LOAD_RESOURCE_CONFIG);
 		}
 		
 		private function initCommand(): void
 		{
-			
+			facade.registerCommand(LoadResourcesConfigCommand.LOAD_RESOURCE_CONFIG, LoadResourcesConfigCommand);
 		}
 		
 		private function initMediator(): void
 		{
-			
+			facade.registerMediator(new MainMediator(_main));
+			facade.registerMediator(new ProgressBarMediator());
 		}
 		
 		private function initProxy(): void

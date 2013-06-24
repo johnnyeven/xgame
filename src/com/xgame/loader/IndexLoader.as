@@ -154,7 +154,7 @@ package com.xgame.loader
 		
 		private function onFontLoaded(evt: Event): void
 		{
-			var MSYH: Class = ApplicationDomain.currentDomain.getDefinition("font.MSYH") as Class;
+			var MSYH: Class = ApplicationDomain.currentDomain.getDefinition("assets.font.MSYH") as Class;
 			Font.registerFont(MSYH);
 			loadMain();
 		}
