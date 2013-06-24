@@ -1,6 +1,8 @@
 package com.xgame.loader
 {
 	import com.xgame.utils.RequestUtils;
+	import com.xgame.utils.VersionUtils;
+	import com.xgame.utils.manager.LanguageManager;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
@@ -21,15 +23,13 @@ package com.xgame.loader
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	
-	import com.xgame.utils.RequestUtils;
-	import com.xgame.utils.VersionUtils;
-	import com.xgame.utils.manager.LanguageManager;
+	import views.loader.LoaderProgressBarComponent;
 	
 	[SWF(width="1028", height="600", backgroundColor="0x000000",frameRate="30")]
 	public class IndexLoader extends Sprite
 	{
 		private var _msgText: TextField;
-//		private var _progressBar: LoaderProgressBarComponent;
+		private var _progressBar: LoaderProgressBarComponent;
 		
 		public function IndexLoader()
 		{
@@ -100,27 +100,27 @@ package com.xgame.loader
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onProgressBarLoaded);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadIOError);
 			
-			var urlRequest: URLRequest = new URLRequest("assets/ui/loader/processBar.swf");
+			var urlRequest: URLRequest = new URLRequest("assets/swf/ui/loader/processBar.swf");
 			var loaderContext: LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
 			_loader.load(urlRequest, loaderContext);
 		}
 		
 		private function onProgressBarLoaded(evt: Event): void
 		{
-//			_progressBar = new LoaderProgressBarComponent();
-//			addChild(_progressBar);
-//			removeChild(_msgText);
-//			_msgText = null;
-//			
-//			center();
-//			
+			_progressBar = new LoaderProgressBarComponent();
+			addChild(_progressBar);
+			removeChild(_msgText);
+			_msgText = null;
+			
+			center();
+			
 			loadBaseUI();
 		}
 		
 		private function loadBaseUI(): void
 		{
-//			_progressBar.title = LanguageManager.getInstance().lang("load_base_ui");
-//			_progressBar.percentage = 0;
+			_progressBar.title = LanguageManager.getInstance().lang("load_base_ui");
+			_progressBar.percentage = 0;
 			
 			var _loader: Loader = new Loader();
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onBaseUILoaded);
@@ -139,8 +139,8 @@ package com.xgame.loader
 		
 		private function loadFont(): void
 		{
-//			_progressBar.title = LanguageManager.getInstance().lang("load_font");
-//			_progressBar.percentage = 0;
+			_progressBar.title = LanguageManager.getInstance().lang("load_font");
+			_progressBar.percentage = 0;
 			
 			var _loader: Loader = new Loader();
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded);
@@ -161,8 +161,8 @@ package com.xgame.loader
 		
 		private function loadMain(): void
 		{
-//			_progressBar.title = LanguageManager.getInstance().lang("load_main");
-//			_progressBar.percentage = 0;
+			_progressBar.title = LanguageManager.getInstance().lang("load_main");
+			_progressBar.percentage = 0;
 			
 			var _loader: Loader = new Loader();
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onMainLoaded);
@@ -181,13 +181,13 @@ package com.xgame.loader
 			addChild(_main);
 			_main["init"]();
 			
-//			removeChild(_progressBar);
-//			_progressBar = null;
+			removeChild(_progressBar);
+			_progressBar = null;
 		}
 		
 		private function onLoadProgress(evt: ProgressEvent): void
 		{
-//			_progressBar.percentage = evt.bytesLoaded / evt.bytesTotal;
+			_progressBar.percentage = evt.bytesLoaded / evt.bytesTotal;
 		}
 		
 		private function onLoadIOError(evt: IOErrorEvent): void
@@ -206,11 +206,11 @@ package com.xgame.loader
 				_msgText.y = sh - _msgText.height * 0.5;
 			}
 			
-//			if (_progressBar)
-//			{
-//				_progressBar.x = sw - _progressBar.width * 0.5;
-//				_progressBar.y = sh - _progressBar.height * 0.5;
-//			}
+			if (_progressBar)
+			{
+				_progressBar.x = sw - _progressBar.width * 0.5;
+				_progressBar.y = sh - _progressBar.height * 0.5;
+			}
 		}
 		
 		private function set loaderMessage(value: String):void
