@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<LoaderMax name="loginResources">
+		<SWFLoader url="assets/swf/loginUI.swf" name="loginUI" autoPlay="false" />
+		<SWFLoader url="assets/swf/character.swf" name="character" autoPlay="false" />
+		<SWFLoader url="assets/swf/skill01.swf" name="skill01" autoPlay="false" />
+	</LoaderMax>
+</root>
