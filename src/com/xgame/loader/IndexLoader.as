@@ -127,7 +127,7 @@ package com.xgame.loader
 			_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onLoadProgress);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadIOError);
 			
-			var urlRequest: URLRequest = new URLRequest("resources/ui/base_ui.swf");
+			var urlRequest: URLRequest = new URLRequest("assets/swf/ui/base_ui.swf");
 			var loaderContext: LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
 			_loader.load(urlRequest, loaderContext);
 		}
@@ -147,7 +147,7 @@ package com.xgame.loader
 			_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onLoadProgress);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadIOError);
 			
-			var urlRequest: URLRequest = new URLRequest("resources/font/font.swf");
+			var urlRequest: URLRequest = new URLRequest("assets/swf/font/font.swf");
 			var loaderContext: LoaderContext = new LoaderContext(false, ApplicationDomain.currentDomain);
 			_loader.load(urlRequest, loaderContext);
 		}
