@@ -1,4 +1,4 @@
-package controllers.init
+package controllers.login
 {
 	import com.greensock.events.LoaderEvent;
 	import com.greensock.loading.XMLLoader;
@@ -6,37 +6,36 @@ package controllers.init
 	import com.xgame.core.center.ResourceCenter;
 	import com.xgame.utils.manager.LanguageManager;
 	
-	import controllers.login.LoadLoginResourcesCommand;
+	import controllers.init.InitLoginServerCommand;
 	
 	import mediators.loader.ProgressBarMediator;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
-	public class LoadResourcesConfigCommand extends SimpleCommand
+	public class LoadLoginResourcesCommand extends SimpleCommand
 	{
-		public static const LOAD_RESOURCE_CONFIG: String = "LoaderResourcesConfigCommand.LoadResourceConfig";
+		public static const LOAD_LOGIN_RESOURCE_NOTE: String = "LoadLoginResourcesCommand.LoadLoginResourceNote";
 		
-		public function LoadResourcesConfigCommand()
+		public function LoadLoginResourcesCommand()
 		{
 			super();
 		}
 		
 		override public function execute(notification:INotification):void
 		{
-			var _loader: XMLLoader = new XMLLoader("config/" + LanguageManager.language + "/resources.xml", {name:"resourcesConfig", onComplete:onLoadComplete, onProgress: onLoadProgress, onError: onLoadIOError});
-			_loader.load();
+			ResourceCenter.instance.load("loginResource", null, onLoadComplete, onLoadProgress, onLoadIOError);
 			facade.sendNotification(ProgressBarMediator.SHOW_PROGRESSBAR_NOTE);
-			facade.sendNotification(ProgressBarMediator.SET_PROGRESSBAR_TITLE_NOTE, LanguageManager.getInstance().lang("load_resource_config"));
+			facade.sendNotification(ProgressBarMediator.SET_PROGRESSBAR_TITLE_NOTE, LanguageManager.getInstance().lang("load_loagin_ui"));
 		}
 		
 		private function onLoadComplete(evt: LoaderEvent): void
 		{
-			facade.removeCommand(LOAD_RESOURCE_CONFIG);
-			facade.registerCommand(LoadLoginResourcesCommand.LOAD_LOGIN_RESOURCE_NOTE, LoadLoginResourcesCommand);
+			facade.removeCommand(LOAD_LOGIN_RESOURCE_NOTE);
+			facade.registerCommand(InitLoginServerCommand.LOAD_SERVER_NOTE, InitLoginServerCommand);
 			
 			facade.sendNotification(ProgressBarMediator.HIDE_PROGRESSBAR_NOTE);
-			facade.sendNotification(LoadLoginResourcesCommand.LOAD_LOGIN_RESOURCE_NOTE);
+			facade.sendNotification(InitLoginServerCommand.LOAD_SERVER_NOTE);
 		}
 		
 		private function onLoadProgress(evt: LoaderEvent): void

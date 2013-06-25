@@ -31,6 +31,7 @@ package controllers
 	import com.xgame.utils.manager.TimerManager;
 	
 	import controllers.init.LoadResourcesConfigCommand;
+	import controllers.login.LoadLoginResourcesCommand;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
