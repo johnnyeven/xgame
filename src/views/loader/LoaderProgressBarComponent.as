@@ -1,5 +1,7 @@
 package views.loader
 {
+	import com.xgame.common.pool.ResourcePool;
+	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.text.TextField;
@@ -18,8 +20,7 @@ package views.loader
 		public function LoaderProgressBarComponent()
 		{
 			super();
-			var ui: Class = getDefinitionByName("assets.ui.loader.LoaderProgressBarSkin") as Class;
-			var skin: MovieClip = new ui();
+			var skin: MovieClip = ResourcePool.instance.getDisplayObject("assets.ui.loader.LoaderProgressBarSkin") as MovieClip;
 			addChild(skin);
 			
 			_progressBarTitle = skin.getChildByName("progressBarTitle") as TextField;

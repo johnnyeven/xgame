@@ -4,7 +4,9 @@ package controllers.init
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.events.net.CommandEvent;
 	
-//	import controller.login.CreateStartMediatorCommand;
+	import controllers.login.ShowStartMediatorCommand;
+	
+	import mediators.loader.LoadingIconMediator;
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
@@ -29,6 +31,8 @@ package controllers.init
 			_commandCenter.addEventListener(CommandEvent.IOERROR_EVENT, onIOError);
 			_commandCenter.addEventListener(CommandEvent.SECURITYERROR_EVENT, onSecurityError);
 			_commandCenter.connect(SocketContextConfig.login_ip, SocketContextConfig.login_port);
+			
+			facade.sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 		}
 		
 		private function onClosed(event: CommandEvent): void
@@ -39,17 +43,22 @@ package controllers.init
 		private function onConnected(event: CommandEvent): void
 		{
 			facade.removeCommand(CONNECT_SOCKET_NOTE);
-//			facade.sendNotification(CreateStartMediatorCommand.CREATE_LOGIN_VIEW_NOTE);
+			
+			facade.sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
+			facade.registerCommand(ShowStartMediatorCommand.CREATE_LOGIN_VIEW_NOTE, ShowStartMediatorCommand);
+			facade.sendNotification(ShowStartMediatorCommand.CREATE_LOGIN_VIEW_NOTE);
 		}
 		
 		private function onIOError(event: CommandEvent): void
 		{
 			facade.removeCommand(CONNECT_SOCKET_NOTE);
+			facade.sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 		}
 		
 		private function onSecurityError(event: CommandEvent): void
 		{
 			facade.removeCommand(CONNECT_SOCKET_NOTE);
+			facade.sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 		}
 	}
 }

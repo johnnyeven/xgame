@@ -43,6 +43,7 @@ package controllers
 	import flash.utils.getTimer;
 	
 	import mediators.MainMediator;
+	import mediators.loader.LoadingIconMediator;
 	import mediators.loader.ProgressBarMediator;
 	
 	import org.puremvc.as3.interfaces.INotification;
@@ -88,6 +89,7 @@ package controllers
 		private function initMediator(): void
 		{
 			facade.registerMediator(new MainMediator(_main));
+			facade.registerMediator(new LoadingIconMediator());
 			facade.registerMediator(new ProgressBarMediator());
 		}
 		
