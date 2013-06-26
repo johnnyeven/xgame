@@ -3,23 +3,24 @@ package proxy
 //	import controllers.init.LoadServerListCommand;
 //	import controllers.login.ShowServerMediatorCommand;
 	
-	import mediators.loader.LoadingIconMediator;
-	
+	import com.xgame.common.commands.CommandList;
 	import com.xgame.common.commands.receiving.Receive_Info_QuickStart;
 	import com.xgame.common.commands.sending.Send_Info_QuickStart;
+	import com.xgame.configuration.GlobalContextConfig;
+	import com.xgame.core.center.CommandCenter;
+	
+	import controllers.login.ShowServerMediatorCommand;
+	
+	import mediators.loader.LoadingIconMediator;
 	
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
-	
-	import com.xgame.configuration.GlobalContextConfig;
-	import com.xgame.core.center.CommandCenter;
-	import com.xgame.common.commands.CommandList;
 	
 	public class LoginProxy extends Proxy implements IProxy
 	{
 		public static const NAME: String = "LoginProxy";
 		
-		public static const QUICK_START: uint = 0x0800;
+		public static const QUICK_START: uint = 0x0080;
 		
 		public function LoginProxy(data:Object=null)
 		{
@@ -40,11 +41,11 @@ package proxy
 		
 		private function onQuickStart(protocol: Receive_Info_QuickStart): void
 		{
-//			facade.registerCommand(CreateServerMediatorCommand.CREATE_NOTE, CreateServerMediatorCommand);
+			facade.registerCommand(ShowServerMediatorCommand.CREATE_NOTE, ShowServerMediatorCommand);
 			
 			setData(protocol);
 			sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
-//			sendNotification(CreateServerMediatorCommand.CREATE_NOTE);
+			sendNotification(ShowServerMediatorCommand.CREATE_NOTE);
 		}
 	}
 }
