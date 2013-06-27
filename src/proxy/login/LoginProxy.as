@@ -1,13 +1,16 @@
-package proxy
+package proxy.login
 {
 //	import controllers.init.LoadServerListCommand;
 //	import controllers.login.ShowServerMediatorCommand;
 	
 	import com.xgame.common.commands.CommandList;
 	import com.xgame.common.commands.receiving.Receive_Info_QuickStart;
+	import com.xgame.common.commands.receiving.Receive_Info_RequestAccountRole;
 	import com.xgame.common.commands.sending.Send_Info_QuickStart;
+	import com.xgame.common.commands.sending.Send_Info_RequestAccountRole;
 	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.center.CommandCenter;
+	import com.xgame.utils.StringUtils;
 	
 	import controllers.login.ShowServerMediatorCommand;
 	
@@ -20,7 +23,7 @@ package proxy
 	{
 		public static const NAME: String = "LoginProxy";
 		
-		public static const QUICK_START: uint = 0x0080;
+		public static const QUICK_START: uint = 0x0020;
 		
 		public function LoginProxy(data:Object=null)
 		{
@@ -29,14 +32,17 @@ package proxy
 		
 		public function quickStart(): void
 		{
-			sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
-			
-			CommandList.instance.bind(QUICK_START, Receive_Info_QuickStart);
-			CommandCenter.instance.add(QUICK_START, onQuickStart);
-			
-			var _protocol: Send_Info_QuickStart = new Send_Info_QuickStart();
-			_protocol.GameId = GlobalContextConfig.GameId;
-			CommandCenter.instance.send(_protocol);
+			if(CommandCenter.instance.connected)
+			{
+				sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
+				
+				CommandList.instance.bind(QUICK_START, Receive_Info_QuickStart);
+				CommandCenter.instance.add(QUICK_START, onQuickStart);
+				
+				var _protocol: Send_Info_QuickStart = new Send_Info_QuickStart();
+				_protocol.GameId = GlobalContextConfig.GameId;
+				CommandCenter.instance.send(_protocol);
+			}
 		}
 		
 		private function onQuickStart(protocol: Receive_Info_QuickStart): void

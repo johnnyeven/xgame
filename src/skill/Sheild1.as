@@ -24,6 +24,7 @@ package skill
 		
 		public static function execute(skillId: String): void
 		{
+			_id = skillId;
 			var skillTarget: *;
 			if(Scene.instance.player.locker != null)
 			{

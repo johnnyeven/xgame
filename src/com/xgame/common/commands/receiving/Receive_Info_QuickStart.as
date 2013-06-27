@@ -58,6 +58,11 @@ package com.xgame.common.commands.receiving
 				}
 			}
 		}
+		
+		override public function get protocolName():String
+		{
+			return "Receive_Info_QuickStart";
+		}
 	}
 
 }

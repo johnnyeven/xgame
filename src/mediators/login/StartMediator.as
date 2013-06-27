@@ -9,7 +9,7 @@ package mediators.login
 	
 	import org.puremvc.as3.interfaces.INotification;
 	
-	import proxy.LoginProxy;
+	import proxy.login.LoginProxy;
 	
 	import views.login.StartComponent;
 	

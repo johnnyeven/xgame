@@ -49,9 +49,6 @@ package controllers
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
-	import skill.Sheild1;
-	import skill.Skill1;
-	
 	public class ApplicationCommand extends SimpleCommand
 	{
 		private var _main: main;

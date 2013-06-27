@@ -1,10 +1,10 @@
 package controllers.init
 {
-//	import controller.scene.LoadSceneResourcesCommand;
-	
 	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.events.net.CommandEvent;
+	
+	import controllers.login.RequestAccountRoleCommand;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -61,7 +61,12 @@ package controllers.init
 			
 			facade.sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 			facade.sendNotification(ServerMediator.DISPOSE_NOTE);
-//			facade.sendNotification(LoadSceneResourcesCommand.LOAD_RESOURCES_NOTE);
+			
+			if(!facade.hasCommand(RequestAccountRoleCommand.REQUEST_ACCOUNT_ROLE_NOTE))
+			{
+				facade.registerCommand(RequestAccountRoleCommand.REQUEST_ACCOUNT_ROLE_NOTE, RequestAccountRoleCommand);
+			}
+			facade.sendNotification(RequestAccountRoleCommand.REQUEST_ACCOUNT_ROLE_NOTE);
 		}
 		
 		private function onIOError(event: CommandEvent): void
