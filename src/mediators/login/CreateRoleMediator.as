@@ -54,7 +54,16 @@ package mediators.login
 		
 		private function sendCreateRole(roleName: String): void
 		{
-			var _proxy: RequestRoleProxy = facade.retrieveProxy(RequestRoleProxy.NAME) as RequestRoleProxy;
+			var _proxy: RequestRoleProxy;
+			if(!facade.hasProxy(RequestRoleProxy.NAME))
+			{
+				_proxy = new RequestRoleProxy();
+				facade.registerProxy(_proxy);
+			}
+			else
+			{
+				_proxy = facade.retrieveProxy(RequestRoleProxy.NAME) as RequestRoleProxy;
+			}
 			if(_proxy != null)
 			{
 				_proxy.registerAccountRole(roleName);

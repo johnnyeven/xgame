@@ -3,7 +3,9 @@ package proxy.login
 	import com.greensock.events.LoaderEvent;
 	import com.xgame.common.commands.CommandList;
 	import com.xgame.common.commands.receiving.Receive_Info_QuickStart;
+	import com.xgame.common.commands.receiving.Receive_Info_RegisterAccountRole;
 	import com.xgame.common.commands.receiving.Receive_Info_RequestAccountRole;
+	import com.xgame.common.commands.sending.Send_Info_RegisterAccountRole;
 	import com.xgame.common.commands.sending.Send_Info_RequestAccountRole;
 	import com.xgame.core.center.CommandCenter;
 	
@@ -47,7 +49,6 @@ package proxy.login
 		
 		private function onRequestAccountRole(protocol: Receive_Info_RequestAccountRole): void
 		{
-//			facade.registerCommand(ShowServerMediatorCommand.CREATE_NOTE, ShowServerMediatorCommand);
 			sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 			
 			setData(protocol);
@@ -58,10 +59,8 @@ package proxy.login
 			}
 			else
 			{
-				//加载初始数据
+				continueToLoadInitData();
 			}
-//			sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
-//			sendNotification(ShowServerMediatorCommand.CREATE_NOTE);
 		}
 		
 		public function registerAccountRole(roleName: String): void
@@ -73,17 +72,26 @@ package proxy.login
 				{
 					sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 					
-					CommandList.instance.bind(REGISTER_ACCOUNT_ROLE, Receive_Info_RequestAccountRole);
+					CommandList.instance.bind(REGISTER_ACCOUNT_ROLE, Receive_Info_RegisterAccountRole);
 					CommandCenter.instance.add(REGISTER_ACCOUNT_ROLE, onRegisterAccountRole);
 					
-					var data: Send_Info_RequestAccountRole = new Send_Info_RequestAccountRole();
+					var data: Send_Info_RegisterAccountRole = new Send_Info_RegisterAccountRole();
 					data.GUID = protocol.GUID;
+					data.nickName = roleName;
 					CommandCenter.instance.send(data);
 				}
 			}
 		}
 		
-		private function onRegisterAccountRole(evt: LoaderEvent): void
+		private function onRegisterAccountRole(protocol: Receive_Info_RegisterAccountRole): void
+		{
+			sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
+			
+			setData(protocol);
+			continueToLoadInitData();
+		}
+		
+		private function continueToLoadInitData(): void
 		{
 			
 		}
