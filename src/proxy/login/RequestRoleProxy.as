@@ -9,9 +9,11 @@ package proxy.login
 	import com.xgame.common.commands.sending.Send_Info_RequestAccountRole;
 	import com.xgame.core.center.CommandCenter;
 	
+	import controllers.init.LoadInitDataCommand;
 	import controllers.login.ShowCreateRoleMediatorCommand;
 	
 	import mediators.loader.LoadingIconMediator;
+	import mediators.login.CreateRoleMediator;
 	
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
@@ -26,6 +28,8 @@ package proxy.login
 		public function RequestRoleProxy(proxyName:String=null, data:Object=null)
 		{
 			super(proxyName, data);
+			
+			facade.registerCommand(LoadInitDataCommand.LOAD_INIT_DATA_NOTE, LoadInitDataCommand);
 		}
 		
 		public function requestAccountRole(): void
@@ -59,7 +63,8 @@ package proxy.login
 			}
 			else
 			{
-				continueToLoadInitData();
+				facade.sendNotification(CreateRoleMediator.DISPOSE_NOTE);
+				facade.sendNotification(LoadInitDataCommand.LOAD_INIT_DATA_NOTE);
 			}
 		}
 		
@@ -88,12 +93,8 @@ package proxy.login
 			sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 			
 			setData(protocol);
-			continueToLoadInitData();
-		}
-		
-		private function continueToLoadInitData(): void
-		{
-			
+			facade.sendNotification(CreateRoleMediator.DISPOSE_NOTE);
+			facade.sendNotification(LoadInitDataCommand.LOAD_INIT_DATA_NOTE);
 		}
 	}
 }

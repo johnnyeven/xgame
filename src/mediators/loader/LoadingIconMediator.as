@@ -2,10 +2,12 @@ package mediators.loader
 {
 	import com.greensock.TweenLite;
 	import com.xgame.common.pool.ResourcePool;
+	import com.xgame.utils.StringUtils;
 	import com.xgame.utils.UIUtils;
 	
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.text.TextField;
 	
 	import mediators.MainMediator;
 	
@@ -19,10 +21,14 @@ package mediators.loader
 		
 		public static const LOADING_SHOW_NOTE: String = "loading_show_note";
 		public static const LOADING_HIDE_NOTE: String = "loading_hide_note";
+		public static const LOADING_SET_TITLE_NOTE: String = "loading_set_title_note";
+		
+		private var title: TextField;
 		
 		public function LoadingIconMediator()
 		{
 			super(NAME, ResourcePool.instance.getDisplayObject("assets.ui.LoadingIconSkin"));
+			title = component.getChildByName("title") as TextField;
 		}
 		
 		public function get component(): MovieClip
@@ -32,7 +38,7 @@ package mediators.loader
 		
 		override public function listNotificationInterests(): Array
 		{
-			return [LOADING_SHOW_NOTE, LOADING_HIDE_NOTE];
+			return [LOADING_SHOW_NOTE, LOADING_HIDE_NOTE, LOADING_SET_TITLE_NOTE];
 		}
 		
 		override public function handleNotification(notification:INotification): void
@@ -45,6 +51,8 @@ package mediators.loader
 				case LOADING_HIDE_NOTE:
 					hideLoading();
 					break;
+				case LOADING_SET_TITLE_NOTE:
+					setTitle(String(notification.getBody()));
 			}
 		}
 		
@@ -75,6 +83,21 @@ package mediators.loader
 					}
 				}
 			});
+		}
+		
+		private function setTitle(_title: String): void
+		{
+			if(title != null)
+			{
+				if(!StringUtils.empty(_title))
+				{
+					title.text = _title;
+				}
+				else
+				{
+					title.text = "";
+				}
+			}
 		}
 	}
 }
