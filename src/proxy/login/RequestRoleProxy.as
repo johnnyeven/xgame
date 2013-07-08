@@ -8,6 +8,7 @@ package proxy.login
 	import com.xgame.common.commands.sending.Send_Info_RegisterAccountRole;
 	import com.xgame.common.commands.sending.Send_Info_RequestAccountRole;
 	import com.xgame.core.center.CommandCenter;
+	import com.xgame.utils.Int64;
 	
 	import controllers.init.LoadInitDataCommand;
 	import controllers.login.ShowCreateRoleMediatorCommand;
@@ -25,9 +26,11 @@ package proxy.login
 		public static const REQUEST_ACCOUNT_ROLE: uint = 0x0040;
 		public static const REGISTER_ACCOUNT_ROLE: uint = 0x0050;
 		
-		public function RequestRoleProxy(proxyName:String=null, data:Object=null)
+		public var accountId: Int64;
+		
+		public function RequestRoleProxy(data:Object=null)
 		{
-			super(proxyName, data);
+			super(NAME, data);
 			
 			facade.registerCommand(LoadInitDataCommand.LOAD_INIT_DATA_NOTE, LoadInitDataCommand);
 		}
@@ -56,6 +59,8 @@ package proxy.login
 			sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 			
 			setData(protocol);
+			accountId = protocol.accountId;
+			
 			if(protocol.accountId.toNumber() == -1)
 			{
 				facade.registerCommand(ShowCreateRoleMediatorCommand.SHOW_CREATE_ROLE_NOTE, ShowCreateRoleMediatorCommand);
@@ -93,6 +98,8 @@ package proxy.login
 			sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 			
 			setData(protocol);
+			accountId = protocol.accountId;
+			
 			facade.sendNotification(CreateRoleMediator.DISPOSE_NOTE);
 			facade.sendNotification(LoadInitDataCommand.LOAD_INIT_DATA_NOTE);
 		}
