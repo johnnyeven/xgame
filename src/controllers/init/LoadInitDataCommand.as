@@ -12,14 +12,16 @@ package controllers.init
 		public function LoadInitDataCommand()
 		{
 			super();
+			facade.registerCommand(LoadSkillResourcesCommand.LOAD_RESOURCES, LoadSkillResourcesCommand);
+			facade.registerCommand(LoadSkillResourcesCommand.LOAD_LOGIC, LoadSkillResourcesCommand);
 			facade.registerCommand(LoadHotkeyConfigCommand.LOAD_HOTKEY_CONFIG_NOTE, LoadHotkeyConfigCommand);
 		}
 		
 		override public function execute(notification:INotification):void
 		{
 			facade.removeCommand(LOAD_INIT_DATA_NOTE);
-			facade.sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
-			facade.sendNotification(LoadHotkeyConfigCommand.LOAD_HOTKEY_CONFIG_NOTE);
+			
+			facade.sendNotification(LoadSkillResourcesCommand.LOAD_RESOURCES);
 		}
 	}
 }
