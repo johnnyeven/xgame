@@ -4,7 +4,10 @@ package proxy
 	import com.xgame.common.commands.receiving.Receive_Info_RequestHotkey;
 	import com.xgame.common.commands.sending.Send_Info_RequestHotkey;
 	import com.xgame.core.center.CommandCenter;
+	import com.xgame.core.center.HotkeyCenter;
 	import com.xgame.utils.Int64;
+	
+	import flash.utils.getDefinitionByName;
 	
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
@@ -34,9 +37,16 @@ package proxy
 			CommandCenter.instance.send(_request);
 		}
 		
-		private function onRequestHotkey(): void
+		private function onRequestHotkey(protocol: Receive_Info_RequestHotkey): void
 		{
-			
+			var code: int;
+			var classRef: Class;
+			for(var i: uint = 0; i < protocol.config.hotkey.length(); i++)
+			{
+				code = int(protocol.config.hotkey[i].@code);
+				classRef = getDefinitionByName(protocol.config.hotkey[i]["@class"]) as Class;
+				HotkeyCenter.instance.bind(code, classRef);
+			}
 		}
 	}
 }

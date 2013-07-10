@@ -20,11 +20,11 @@ package skill
 		public function Sheild1()
 		{
 			super();
+			_id = "sheild1";
 		}
 		
-		public static function execute(skillId: String): void
+		public static function execute(): void
 		{
-			_id = skillId;
 			var skillTarget: *;
 			if(Scene.instance.player.locker != null)
 			{
@@ -34,7 +34,7 @@ package skill
 			{
 				skillTarget = Map.instance.getWorldPosition(Scene.instance.stage.mouseX, Scene.instance.stage.mouseY);
 			}
-			prepareSkill(skillId, skillTarget);
+			prepareSkill(_id, skillTarget);
 		}
 		
 		protected static function prepareSkill(skillId: String, target: BitmapDisplay): void
