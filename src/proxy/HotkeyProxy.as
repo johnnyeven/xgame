@@ -7,6 +7,8 @@ package proxy
 	import com.xgame.core.center.HotkeyCenter;
 	import com.xgame.utils.Int64;
 	
+	import controllers.init.LoadInitDataCommand;
+	
 	import flash.utils.getDefinitionByName;
 	
 	import org.puremvc.as3.interfaces.IProxy;
@@ -46,7 +48,9 @@ package proxy
 				code = int(protocol.config.hotkey[i].@code);
 				classRef = getDefinitionByName(protocol.config.hotkey[i]["@class"]) as Class;
 				HotkeyCenter.instance.bind(code, classRef);
+				HotkeyCenter.GlobalEnabled = false;
 			}
+			facade.sendNotification(LoadInitDataCommand.LOAD_SCENE);
 		}
 	}
 }

@@ -5,4 +5,6 @@
 	<SWFLoader name="create_role_ui" url="assets/swf/ui/login/create_role_ui.swf" autoPlay="false" version="1.0.0" />
 	<SWFLoader name="magician_skill_ui" url="assets/swf/skills/skill01.swf" autoPlay="false" version="1.0.0" />
 	<SWFLoader name="magician_skill_logic" url="assets/swf/skills/magician_skill.swf" autoPlay="false" version="1.0.0" />
+	
+	<SWFLoader name="magician_character_1" url="assets/swf/characters/character.swf" autoPlay="false" version="1.0.0" />
 </root>

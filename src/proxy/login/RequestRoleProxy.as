@@ -33,6 +33,7 @@ package proxy.login
 			super(NAME, data);
 			
 			facade.registerCommand(LoadInitDataCommand.LOAD_INIT_DATA_NOTE, LoadInitDataCommand);
+			facade.registerCommand(LoadInitDataCommand.LOAD_SCENE, LoadInitDataCommand);
 		}
 		
 		public function requestAccountRole(): void

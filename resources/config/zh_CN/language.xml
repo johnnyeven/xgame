@@ -13,6 +13,8 @@
 	<load_map_config>正在加载地图配置</load_map_config>
 	<load_skill_ui>正在加载技能UI</load_skill_ui>
 	<load_skill_logic>正在加载技能逻辑</load_skill_logic>
+	<load_hotkey_config>正在加载热键配置信息</load_hotkey_config>
+	<load_scene>正在载入场景</load_scene>
 	
 	<common_messagebox_ok>确定</common_messagebox_ok>
 	<common_messagebox_cancel>取消</common_messagebox_cancel>
