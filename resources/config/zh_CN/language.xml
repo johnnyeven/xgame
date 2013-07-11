@@ -11,6 +11,7 @@
 	<load_scene_ui>正在加载基础场景UI</load_scene_ui>
 	<load_control_panel_ui>正在加载控制面板UI</load_control_panel_ui>
 	<load_map_config>正在加载地图配置</load_map_config>
+	<load_character_ui>正在加载角色UI</load_character_ui>
 	<load_skill_ui>正在加载技能UI</load_skill_ui>
 	<load_skill_logic>正在加载技能逻辑</load_skill_logic>
 	<load_hotkey_config>正在加载热键配置信息</load_hotkey_config>
