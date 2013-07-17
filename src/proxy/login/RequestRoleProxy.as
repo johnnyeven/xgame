@@ -41,7 +41,7 @@ package proxy.login
 			if(CommandCenter.instance.connected)
 			{
 				var protocol: Receive_Info_QuickStart = facade.retrieveProxy(LoginProxy.NAME).getData() as Receive_Info_QuickStart;
-				if(protocol != null || !isNaN(protocol.GUID))
+				if(protocol != null || protocol.GUID != null)
 				{
 					sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 					
@@ -79,7 +79,7 @@ package proxy.login
 			if(CommandCenter.instance.connected)
 			{
 				var protocol: Receive_Info_QuickStart = facade.retrieveProxy(LoginProxy.NAME).getData() as Receive_Info_QuickStart;
-				if(protocol != null || !isNaN(protocol.GUID))
+				if(protocol != null || protocol.GUID != null)
 				{
 					sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 					

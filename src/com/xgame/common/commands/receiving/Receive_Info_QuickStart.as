@@ -1,11 +1,11 @@
 package com.xgame.common.commands.receiving
 {
 	import com.adobe.utils.IntUtil;
+	import com.xgame.configuration.SocketContextConfig;
+	import com.xgame.utils.Int64;
+	import com.xgame.utils.StringUtils;
 	
 	import flash.utils.ByteArray;
-	
-	import com.xgame.utils.StringUtils;
-	import com.xgame.configuration.SocketContextConfig;
 	
 	/**
 	 * ...
@@ -13,7 +13,7 @@ package com.xgame.common.commands.receiving
 	 */
 	public class Receive_Info_QuickStart extends ReceivingBase 
 	{
-		public var GUID: Number;
+		public var GUID: Int64;
 		public var accountName: String;
 		public var accountPass: String;
 		
@@ -36,10 +36,12 @@ package com.xgame.common.commands.receiving
 					type = bytes.readByte();
 					switch(type)
 					{
-						case SocketContextConfig.TYPE_INT:
-							if (isNaN(GUID))
+						case SocketContextConfig.TYPE_LONG:
+							if (GUID == null)
 							{
-								GUID = bytes.readInt();
+								GUID = new Int64();
+								GUID.low = bytes.readUnsignedInt();
+								GUID.high = bytes.readInt();
 							}
 							break;
 						case SocketContextConfig.TYPE_STRING:

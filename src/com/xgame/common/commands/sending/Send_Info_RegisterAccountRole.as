@@ -1,10 +1,11 @@
 package com.xgame.common.commands.sending
 {
 	import com.xgame.configuration.SocketContextConfig;
+	import com.xgame.utils.Int64;
 
 	public class Send_Info_RegisterAccountRole extends SendingBase
 	{
-		public var GUID: uint;
+		public var GUID: Int64;
 		public var nickName: String;
 		
 		public function Send_Info_RegisterAccountRole()
@@ -16,9 +17,10 @@ package com.xgame.common.commands.sending
 		{
 			super.fill();
 			
-			_byteData.writeInt(4);
-			_byteData.writeByte(SocketContextConfig.TYPE_INT);
-			_byteData.writeUnsignedInt(GUID);
+			_byteData.writeInt(8);
+			_byteData.writeByte(SocketContextConfig.TYPE_LONG);
+			_byteData.writeUnsignedInt(GUID.low);
+			_byteData.writeInt(GUID.high);
 			
 			_byteData.writeInt(nickName.length);
 			_byteData.writeByte(SocketContextConfig.TYPE_STRING);

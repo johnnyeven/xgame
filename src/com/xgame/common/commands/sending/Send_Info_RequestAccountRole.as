@@ -1,10 +1,11 @@
 package com.xgame.common.commands.sending
 {
 	import com.xgame.configuration.SocketContextConfig;
+	import com.xgame.utils.Int64;
 
 	public class Send_Info_RequestAccountRole extends SendingBase
 	{
-		public var GUID: uint;
+		public var GUID: Int64;
 		
 		public function Send_Info_RequestAccountRole()
 		{
@@ -15,9 +16,10 @@ package com.xgame.common.commands.sending
 		{
 			super.fill();
 			
-			_byteData.writeInt(4);
-			_byteData.writeByte(SocketContextConfig.TYPE_INT);
-			_byteData.writeUnsignedInt(GUID);
+			_byteData.writeInt(8);
+			_byteData.writeByte(SocketContextConfig.TYPE_LONG);
+			_byteData.writeUnsignedInt(GUID.low);
+			_byteData.writeInt(GUID.high);
 		}
 		
 		override public function get protocolName():String
