@@ -22,7 +22,7 @@ package com.xgame.common.commands.sending
 			
 			_byteData.writeInt(nickName.length);
 			_byteData.writeByte(SocketContextConfig.TYPE_STRING);
-			_byteData.writeUTFBytes(nickName);
+			_byteData.writeUTF(nickName);
 		}
 	}
 }

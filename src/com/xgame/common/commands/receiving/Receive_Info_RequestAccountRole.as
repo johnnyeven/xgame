@@ -11,14 +11,14 @@ package com.xgame.common.commands.receiving
 	{
 		public var accountId: Int64;
 		public var nickName: String;
-		public var accountCash: UInt64;
+		public var accountCash: Int64;
 		public var direction: int;
-		public var currentHealth: uint;
-		public var maxHealth: uint;
-		public var currentMana: uint;
-		public var maxMana: uint;
-		public var currentEnergy: uint;
-		public var maxEnergy: uint;
+		public var currentHealth: int;
+		public var maxHealth: int;
+		public var currentMana: int;
+		public var maxMana: int;
+		public var currentEnergy: int;
+		public var maxEnergy: int;
 		public var x: int;
 		public var y: int;
 		
@@ -26,12 +26,12 @@ package com.xgame.common.commands.receiving
 		{
 			super((SocketContextConfig.ACTION_REQUEST_CHARACTER << 4) | SocketContextConfig.CONTROLLER_INFO);
 			direction = int.MIN_VALUE;
-			currentHealth = uint.MIN_VALUE;
-			maxHealth = uint.MIN_VALUE;
-			currentMana = uint.MIN_VALUE;
-			maxMana = uint.MIN_VALUE;
-			currentEnergy = uint.MIN_VALUE;
-			maxEnergy = uint.MIN_VALUE;
+			currentHealth = int.MIN_VALUE;
+			maxHealth = int.MIN_VALUE;
+			currentMana = int.MIN_VALUE;
+			maxMana = int.MIN_VALUE;
+			currentEnergy = int.MIN_VALUE;
+			maxEnergy = int.MIN_VALUE;
 			x = int.MIN_VALUE;
 			y = int.MIN_VALUE;
 		}
@@ -60,9 +60,9 @@ package com.xgame.common.commands.receiving
 							}
 							if(accountCash == null)
 							{
-								accountCash = new UInt64();
+								accountCash = new Int64();
 								accountCash.low = data.readUnsignedInt();
-								accountCash.high = data.readUnsignedInt();
+								accountCash.high = data.readInt();
 								break;
 							}
 						case SocketContextConfig.TYPE_STRING:
@@ -78,34 +78,34 @@ package com.xgame.common.commands.receiving
 								direction = data.readInt();
 								break;
 							}
-							if(currentHealth == uint.MIN_VALUE)
+							if(currentHealth == int.MIN_VALUE)
 							{
-								currentHealth = data.readUnsignedInt();
+								currentHealth = data.readInt();
 								break;
 							}
-							if(maxHealth == uint.MIN_VALUE)
+							if(maxHealth == int.MIN_VALUE)
 							{
-								maxHealth = data.readUnsignedInt();
+								maxHealth = data.readInt();
 								break;
 							}
-							if(currentMana == uint.MIN_VALUE)
+							if(currentMana == int.MIN_VALUE)
 							{
-								currentMana = data.readUnsignedInt();
+								currentMana = data.readInt();
 								break;
 							}
-							if(maxMana == uint.MIN_VALUE)
+							if(maxMana == int.MIN_VALUE)
 							{
-								maxMana = data.readUnsignedInt();
+								maxMana = data.readInt();
 								break;
 							}
-							if(currentEnergy == uint.MIN_VALUE)
+							if(currentEnergy == int.MIN_VALUE)
 							{
-								currentEnergy = data.readUnsignedInt();
+								currentEnergy = data.readInt();
 								break;
 							}
-							if(maxEnergy == uint.MIN_VALUE)
+							if(maxEnergy == int.MIN_VALUE)
 							{
-								maxEnergy = data.readUnsignedInt();
+								maxEnergy = data.readInt();
 								break;
 							}
 							if(x == int.MIN_VALUE)

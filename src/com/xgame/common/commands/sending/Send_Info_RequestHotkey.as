@@ -20,8 +20,8 @@ package com.xgame.common.commands.sending
 			{
 				_byteData.writeInt(8);
 				_byteData.writeByte(SocketContextConfig.TYPE_LONG);
-				_byteData.writeInt(accountId.high);
 				_byteData.writeUnsignedInt(accountId.low);
+				_byteData.writeInt(accountId.high);
 			}
 		}
 		
