@@ -1,5 +1,6 @@
 package controllers.init
 {
+	import com.xgame.common.commands.receiving.ReceivingBase;
 	import com.xgame.common.display.CharacterDisplay;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
@@ -12,6 +13,8 @@ package controllers.init
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
+	
+	import proxy.login.RequestRoleProxy;
 	
 	public class StartGameCommand extends SimpleCommand
 	{
@@ -42,17 +45,25 @@ package controllers.init
 		
 		private function createPlayer(): void
 		{
-			var _player: CharacterDisplay = new CharacterDisplay();
-			_player.speed = 7;
-			_player.positionX = 700;
-			_player.positionY = 700;
-			_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
-			var _render: Render = new Render();
-			_player.render = _render;
-			scene.addObject(_player);
-			scene.player = _player;
-			
-			Camera.instance.focus = _player;
+			var _proxy: RequestRoleProxy = facade.retrieveProxy(RequestRoleProxy.NAME) as RequestRoleProxy;
+			if(_proxy != null)
+			{
+				var _protocol: * = _proxy.getData();
+				if(_protocol != null)
+				{
+					var _player: CharacterDisplay = new CharacterDisplay();
+					_player.speed = 7;
+					_player.positionX = _protocol.x;
+					_player.positionY = _protocol.y;
+					_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
+					var _render: Render = new Render();
+					_player.render = _render;
+					scene.addObject(_player);
+					scene.player = _player;
+					
+					Camera.instance.focus = _player;
+				}
+			}
 		}
 	}
 }
