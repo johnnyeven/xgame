@@ -5,6 +5,7 @@ package controllers.init
 	import com.xgame.events.net.CommandEvent;
 	
 	import controllers.login.RequestAccountRoleCommand;
+	import controllers.login.RequestBindSessionCommand;
 	
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
@@ -62,11 +63,11 @@ package controllers.init
 			facade.sendNotification(LoadingIconMediator.LOADING_HIDE_NOTE);
 			facade.sendNotification(ServerMediator.DISPOSE_NOTE);
 			
-			if(!facade.hasCommand(RequestAccountRoleCommand.REQUEST_ACCOUNT_ROLE_NOTE))
+			if(!facade.hasCommand(RequestBindSessionCommand.NAME))
 			{
-				facade.registerCommand(RequestAccountRoleCommand.REQUEST_ACCOUNT_ROLE_NOTE, RequestAccountRoleCommand);
+				facade.registerCommand(RequestBindSessionCommand.NAME, RequestBindSessionCommand);
 			}
-			facade.sendNotification(RequestAccountRoleCommand.REQUEST_ACCOUNT_ROLE_NOTE);
+			facade.sendNotification(RequestBindSessionCommand.NAME);
 		}
 		
 		private function onIOError(event: CommandEvent): void
