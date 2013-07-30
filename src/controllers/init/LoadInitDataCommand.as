@@ -1,9 +1,11 @@
 package controllers.init
 {
+	import com.xgame.common.commands.receiving.Receive_Base_VerifyMap;
 	import com.xgame.core.Camera;
 	import com.xgame.core.GameManager;
 	import com.xgame.core.scene.Scene;
 	import com.xgame.events.scene.SceneEvent;
+	import com.xgame.utils.debug.Debug;
 	import com.xgame.utils.debug.Stats;
 	import com.xgame.utils.manager.LanguageManager;
 	
@@ -13,6 +15,8 @@ package controllers.init
 	
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
+	
+	import proxy.MapProxy;
 	
 	public class LoadInitDataCommand extends SimpleCommand
 	{
@@ -56,12 +60,24 @@ package controllers.init
 		
 		private function loadScene(): void
 		{
+			var _protocol: Receive_Base_VerifyMap;
+			var _proxy: MapProxy = facade.retrieveProxy(MapProxy.NAME) as MapProxy;
+			if(_proxy != null)
+			{
+				_protocol = _proxy.getData() as Receive_Base_VerifyMap;
+			}
+			if(_protocol == null)
+			{
+				Debug.error(this, "没有获取到地图数据");
+				return;
+			}
+			
 			var _gameLayer: Sprite = new Sprite();
 			GameManager.container.stage.addChild(_gameLayer);
 			var _scene: Scene = Scene.initialization(GameManager.container, _gameLayer);
 			Camera.initialization(_scene);
 			_scene.addEventListener(SceneEvent.SCENE_READY, onSceneReady);
-			_scene.initializeMap(1003);
+			_scene.initializeMap(_protocol.mapId);
 		}
 		
 		private function onSceneReady(evt: SceneEvent): void

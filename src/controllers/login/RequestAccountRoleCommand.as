@@ -3,6 +3,7 @@ package controllers.login
 	import org.puremvc.as3.interfaces.INotification;
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
+	import proxy.MapProxy;
 	import proxy.login.RequestRoleProxy;
 	
 	public class RequestAccountRoleCommand extends SimpleCommand
@@ -16,6 +17,8 @@ package controllers.login
 		
 		override public function execute(notification:INotification):void
 		{
+			facade.registerProxy(new MapProxy());
+			
 			var _proxy: RequestRoleProxy;
 			if(!facade.hasProxy(RequestRoleProxy.NAME))
 			{
