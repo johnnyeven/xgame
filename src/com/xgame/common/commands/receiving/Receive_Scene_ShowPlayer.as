@@ -3,11 +3,10 @@ package com.xgame.common.commands.receiving
 	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.utils.Int64;
 	import com.xgame.utils.StringUtils;
-	import com.xgame.utils.UInt64;
 	
 	import flash.utils.ByteArray;
 
-	public class Receive_Info_RegisterAccountRole extends ReceivingBase
+	public class Receive_Scene_ShowPlayer extends ReceivingBase
 	{
 		public var accountId: Int64;
 		public var nickName: String;
@@ -22,9 +21,9 @@ package com.xgame.common.commands.receiving
 		public var x: Number;
 		public var y: Number;
 		
-		public function Receive_Info_RegisterAccountRole()
+		public function Receive_Scene_ShowPlayer()
 		{
-			super((SocketContextConfig.ACTION_REGISTER_CHARACTER << 4) | SocketContextConfig.CONTROLLER_INFO);
+			super(SocketContextConfig.ACTION_SHOW_PLAYER << 8 | SocketContextConfig.CONTROLLER_SCENE);
 			direction = int.MIN_VALUE;
 			currentHealth = int.MIN_VALUE;
 			maxHealth = int.MIN_VALUE;
@@ -123,11 +122,6 @@ package com.xgame.common.commands.receiving
 					}
 				}
 			}
-		}
-		
-		override public function get protocolName():String
-		{
-			return "Receive_Info_RegisterAccountRole";
 		}
 	}
 }

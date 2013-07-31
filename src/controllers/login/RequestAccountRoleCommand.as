@@ -4,6 +4,7 @@ package controllers.login
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
 	import proxy.MapProxy;
+	import proxy.SceneProxy;
 	import proxy.login.RequestRoleProxy;
 	
 	public class RequestAccountRoleCommand extends SimpleCommand
@@ -18,6 +19,7 @@ package controllers.login
 		override public function execute(notification:INotification):void
 		{
 			facade.registerProxy(new MapProxy());
+			facade.registerProxy(new SceneProxy());
 			
 			var _proxy: RequestRoleProxy;
 			if(!facade.hasProxy(RequestRoleProxy.NAME))

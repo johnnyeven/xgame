@@ -1,7 +1,7 @@
 package controllers.init
 {
 	import com.xgame.common.commands.receiving.ReceivingBase;
-	import com.xgame.common.display.CharacterDisplay;
+	import com.xgame.common.display.MainPlayerDisplay;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.core.Camera;
@@ -51,7 +51,7 @@ package controllers.init
 				var _protocol: * = _proxy.getData();
 				if(_protocol != null)
 				{
-					var _player: CharacterDisplay = new CharacterDisplay();
+					var _player: MainPlayerDisplay = new MainPlayerDisplay();
 					_player.speed = 7;
 					_player.positionX = _protocol.x;
 					_player.positionY = _protocol.y;
