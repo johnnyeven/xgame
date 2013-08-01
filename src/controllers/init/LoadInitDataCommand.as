@@ -17,6 +17,7 @@ package controllers.init
 	import org.puremvc.as3.patterns.command.SimpleCommand;
 	
 	import proxy.MapProxy;
+	import proxy.SceneProxy;
 	
 	public class LoadInitDataCommand extends SimpleCommand
 	{
@@ -86,6 +87,12 @@ package controllers.init
 			_scene.removeEventListener(SceneEvent.SCENE_READY, onSceneReady);
 			
 			facade.sendNotification(StartGameCommand.START_GAME_NOTE, _scene);
+			
+			var _proxy: SceneProxy = facade.retrieveProxy(SceneProxy.NAME) as SceneProxy;
+			if(_proxy != null)
+			{
+				_proxy.updatePlayerStatus();
+			}
 		}
 	}
 }

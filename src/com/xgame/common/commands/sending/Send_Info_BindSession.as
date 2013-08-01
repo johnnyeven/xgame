@@ -2,13 +2,13 @@ package com.xgame.common.commands.sending
 {
 	import com.xgame.configuration.SocketContextConfig;
 
-	public class Send_BindSession extends SendingBase
+	public class Send_Info_BindSession extends SendingBase
 	{
 		public var accountName: String;
 		
-		public function Send_BindSession()
+		public function Send_Info_BindSession()
 		{
-			super((SocketContextConfig.ACTION_BIND_SESSION << 4) | SocketContextConfig.CONTROLLER_INFO);
+			super(SocketContextConfig.INFO_BIND_SESSION);
 		}
 		
 		override public function fill():void 

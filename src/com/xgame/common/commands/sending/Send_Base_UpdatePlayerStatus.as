@@ -3,13 +3,13 @@ package com.xgame.common.commands.sending
 	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.utils.Int64;
 
-	public class Send_Info_RequestHotkey extends SendingBase
+	public class Send_Base_UpdatePlayerStatus extends SendingBase
 	{
 		public var accountId: Int64;
 		
-		public function Send_Info_RequestHotkey()
+		public function Send_Base_UpdatePlayerStatus()
 		{
-			super(SocketContextConfig.REQUEST_HOTKEY);
+			super(SocketContextConfig.BASE_UPDATE_STATUS);
 		}
 		
 		override public function fill():void
@@ -23,11 +23,6 @@ package com.xgame.common.commands.sending
 				_byteData.writeUnsignedInt(accountId.low);
 				_byteData.writeInt(accountId.high);
 			}
-		}
-		
-		override public function get protocolName():String
-		{
-			return "Send_Info_RequestHotkey";
 		}
 	}
 }

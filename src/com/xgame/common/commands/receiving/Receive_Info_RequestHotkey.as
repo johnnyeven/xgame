@@ -11,7 +11,7 @@ package com.xgame.common.commands.receiving
 		
 		public function Receive_Info_RequestHotkey()
 		{
-			super(SocketContextConfig.ACTION_REQUEST_HOTKEY << 4 | SocketContextConfig.CONTROLLER_INFO);
+			super(SocketContextConfig.REQUEST_HOTKEY);
 		}
 		
 		override public function fill(data:ByteArray):void

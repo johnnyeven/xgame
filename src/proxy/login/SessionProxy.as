@@ -3,7 +3,8 @@ package proxy.login
 	import com.xgame.common.commands.CommandList;
 	import com.xgame.common.commands.receiving.Receive_BindSession;
 	import com.xgame.common.commands.receiving.Receive_Info_QuickStart;
-	import com.xgame.common.commands.sending.Send_BindSession;
+	import com.xgame.common.commands.sending.Send_Info_BindSession;
+	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.utils.debug.Debug;
 	
@@ -17,7 +18,6 @@ package proxy.login
 	public class SessionProxy extends Proxy implements IProxy
 	{
 		public static const NAME: String = "SessionProxy";
-		public static const BIND_SESSION: uint = 0x0070;
 		
 		public function SessionProxy()
 		{
@@ -36,10 +36,10 @@ package proxy.login
 					{
 						sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 						
-						CommandList.instance.bind(BIND_SESSION, Receive_BindSession);
-						CommandCenter.instance.add(BIND_SESSION, onBindSession);
+						CommandList.instance.bind(SocketContextConfig.INFO_BIND_SESSION, Receive_BindSession);
+						CommandCenter.instance.add(SocketContextConfig.INFO_BIND_SESSION, onBindSession);
 						
-						var _send: Send_BindSession = new Send_BindSession();
+						var _send: Send_Info_BindSession = new Send_Info_BindSession();
 						_send.accountName = _protocol.accountName;
 						CommandCenter.instance.send(_send);
 					}

@@ -7,6 +7,7 @@ package proxy.login
 	import com.xgame.common.commands.receiving.Receive_Info_RequestAccountRole;
 	import com.xgame.common.commands.sending.Send_Info_RegisterAccountRole;
 	import com.xgame.common.commands.sending.Send_Info_RequestAccountRole;
+	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.utils.Int64;
 	
@@ -22,9 +23,6 @@ package proxy.login
 	public class RequestRoleProxy extends Proxy implements IProxy
 	{
 		public static const NAME: String = "RequestRoleProxy";
-		
-		public static const REQUEST_ACCOUNT_ROLE: uint = 0x0040;
-		public static const REGISTER_ACCOUNT_ROLE: uint = 0x0050;
 		
 		public var accountId: Int64;
 		
@@ -45,8 +43,8 @@ package proxy.login
 				{
 					sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 					
-					CommandList.instance.bind(REQUEST_ACCOUNT_ROLE, Receive_Info_RequestAccountRole);
-					CommandCenter.instance.add(REQUEST_ACCOUNT_ROLE, onRequestAccountRole);
+					CommandList.instance.bind(SocketContextConfig.REQUEST_ACCOUNT_ROLE, Receive_Info_RequestAccountRole);
+					CommandCenter.instance.add(SocketContextConfig.REQUEST_ACCOUNT_ROLE, onRequestAccountRole);
 					
 					var data: Send_Info_RequestAccountRole = new Send_Info_RequestAccountRole();
 					data.GUID = protocol.GUID;
@@ -83,8 +81,8 @@ package proxy.login
 				{
 					sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 					
-					CommandList.instance.bind(REGISTER_ACCOUNT_ROLE, Receive_Info_RegisterAccountRole);
-					CommandCenter.instance.add(REGISTER_ACCOUNT_ROLE, onRegisterAccountRole);
+					CommandList.instance.bind(SocketContextConfig.REGISTER_ACCOUNT_ROLE, Receive_Info_RegisterAccountRole);
+					CommandCenter.instance.add(SocketContextConfig.REGISTER_ACCOUNT_ROLE, onRegisterAccountRole);
 					
 					var data: Send_Info_RegisterAccountRole = new Send_Info_RegisterAccountRole();
 					data.GUID = protocol.GUID;

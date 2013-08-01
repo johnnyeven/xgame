@@ -9,6 +9,7 @@ package proxy.login
 	import com.xgame.common.commands.sending.Send_Info_QuickStart;
 	import com.xgame.common.commands.sending.Send_Info_RequestAccountRole;
 	import com.xgame.configuration.GlobalContextConfig;
+	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.utils.StringUtils;
 	
@@ -23,8 +24,6 @@ package proxy.login
 	{
 		public static const NAME: String = "LoginProxy";
 		
-		public static const QUICK_START: uint = 0x0020;
-		
 		public function LoginProxy(data:Object=null)
 		{
 			super(NAME, data);
@@ -36,8 +35,8 @@ package proxy.login
 			{
 				sendNotification(LoadingIconMediator.LOADING_SHOW_NOTE);
 				
-				CommandList.instance.bind(QUICK_START, Receive_Info_QuickStart);
-				CommandCenter.instance.add(QUICK_START, onQuickStart);
+				CommandList.instance.bind(SocketContextConfig.QUICK_START, Receive_Info_QuickStart);
+				CommandCenter.instance.add(SocketContextConfig.QUICK_START, onQuickStart);
 				
 				var _protocol: Send_Info_QuickStart = new Send_Info_QuickStart();
 				_protocol.GameId = GlobalContextConfig.GameId;

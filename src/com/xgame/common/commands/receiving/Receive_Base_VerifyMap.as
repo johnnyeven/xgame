@@ -11,7 +11,7 @@ package com.xgame.common.commands.receiving
 		
 		public function Receive_Base_VerifyMap()
 		{
-			super((SocketContextConfig.ACTION_VERIFY_MAP << 8) | SocketContextConfig.CONTROLLER_BASE);
+			super(SocketContextConfig.BASE_VERIFY_MAP);
 			mapId = int.MIN_VALUE;
 			direction = int.MIN_VALUE;
 		}

@@ -12,14 +12,13 @@ package proxy
 	public class MapProxy extends Proxy implements IProxy
 	{
 		public static const NAME: String = "MapProxy";
-		private static const BASE_VERIFY_MAP: int = (SocketContextConfig.ACTION_VERIFY_MAP << 4) | SocketContextConfig.CONTROLLER_BASE;
 		
 		public function MapProxy(data:Object=null)
 		{
 			super(NAME, data);
 			
-			CommandCenter.instance.add(BASE_VERIFY_MAP, onMapDataReceive);
-			CommandList.instance.bind(BASE_VERIFY_MAP, Receive_Base_VerifyMap);
+			CommandCenter.instance.add(SocketContextConfig.BASE_VERIFY_MAP, onMapDataReceive);
+			CommandList.instance.bind(SocketContextConfig.BASE_VERIFY_MAP, Receive_Base_VerifyMap);
 		}
 		
 		private function onMapDataReceive(protocol: Receive_Base_VerifyMap): void

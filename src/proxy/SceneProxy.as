@@ -1,33 +1,51 @@
 package proxy
 {
 	import com.xgame.common.commands.CommandList;
+	import com.xgame.common.commands.receiving.Receive_Info_RegisterAccountRole;
+	import com.xgame.common.commands.receiving.Receive_Info_RequestAccountRole;
 	import com.xgame.common.commands.receiving.Receive_Scene_ShowPlayer;
-	import com.xgame.common.display.MainPlayerDisplay;
+	import com.xgame.common.commands.sending.Send_Base_UpdatePlayerStatus;
+	import com.xgame.common.display.PlayerDisplay;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
 	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.core.scene.Scene;
+	import com.xgame.utils.debug.Debug;
 	
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
 	
+	import proxy.login.RequestRoleProxy;
+	
 	public class SceneProxy extends Proxy implements IProxy
 	{
 		public static const NAME: String = "SceneProxy";
-		private static const SCENE_SHOW_PLAYER: int = (SocketContextConfig.ACTION_SHOW_PLAYER << 8) | SocketContextConfig.CONTROLLER_SCENE;
 		
 		public function SceneProxy(data:Object=null)
 		{
 			super(NAME, data);
 			
-			CommandCenter.instance.add(SCENE_SHOW_PLAYER, onPlayerShow);
-			CommandList.instance.bind(SCENE_SHOW_PLAYER, Receive_Scene_ShowPlayer);
+			CommandCenter.instance.add(SocketContextConfig.SCENE_SHOW_PLAYER, onPlayerShow);
+			CommandList.instance.bind(SocketContextConfig.SCENE_SHOW_PLAYER, Receive_Scene_ShowPlayer);
+		}
+		
+		public function updatePlayerStatus(): void
+		{
+			var _p: RequestRoleProxy = facade.retrieveProxy(RequestRoleProxy.NAME) as RequestRoleProxy;
+			if(_p == null)
+			{
+				Debug.error(this, "RequestRoleProxy为空，无法获取AccountId");
+				return;
+			}
+			var _protocol: Send_Base_UpdatePlayerStatus = new Send_Base_UpdatePlayerStatus();
+			_protocol.accountId = _p.accountId;
+			CommandCenter.instance.send(_protocol);
 		}
 		
 		private function onPlayerShow(protocol: Receive_Scene_ShowPlayer): void
 		{
-			var _player: MainPlayerDisplay = new MainPlayerDisplay();
+			var _player: PlayerDisplay = new PlayerDisplay();
 			_player.speed = 7;
 			_player.positionX = protocol.x;
 			_player.positionY = protocol.y;

@@ -10,7 +10,7 @@ package com.xgame.common.commands.receiving
 		
 		public function Receive_BindSession()
 		{
-			super((SocketContextConfig.ACTION_BIND_SESSION << 4) | SocketContextConfig.CONTROLLER_INFO);
+			super(SocketContextConfig.INFO_BIND_SESSION);
 		}
 		
 		override public function fill(bytes: ByteArray):void

@@ -12,7 +12,7 @@ package com.xgame.common.commands.sending
 		
 		public function Send_Info_QuickStart() 
 		{
-			super((SocketContextConfig.ACTION_QUICK_START << 4) | SocketContextConfig.CONTROLLER_INFO);
+			super(SocketContextConfig.QUICK_START);
 		}
 		
 		override public function fill():void 

@@ -24,7 +24,7 @@ package com.xgame.common.commands.receiving
 		
 		public function Receive_Info_RegisterAccountRole()
 		{
-			super((SocketContextConfig.ACTION_REGISTER_CHARACTER << 4) | SocketContextConfig.CONTROLLER_INFO);
+			super(SocketContextConfig.REGISTER_ACCOUNT_ROLE);
 			direction = int.MIN_VALUE;
 			currentHealth = int.MIN_VALUE;
 			maxHealth = int.MIN_VALUE;

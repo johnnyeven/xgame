@@ -10,7 +10,7 @@ package com.xgame.common.commands.sending
 		
 		public function Send_Info_RegisterAccountRole()
 		{
-			super(SocketContextConfig.ACTION_REGISTER_CHARACTER << 4 | SocketContextConfig.CONTROLLER_INFO);
+			super(SocketContextConfig.REGISTER_ACCOUNT_ROLE);
 		}
 		
 		override public function fill():void

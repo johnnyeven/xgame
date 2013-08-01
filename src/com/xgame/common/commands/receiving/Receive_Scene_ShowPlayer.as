@@ -23,7 +23,7 @@ package com.xgame.common.commands.receiving
 		
 		public function Receive_Scene_ShowPlayer()
 		{
-			super(SocketContextConfig.ACTION_SHOW_PLAYER << 8 | SocketContextConfig.CONTROLLER_SCENE);
+			super(SocketContextConfig.SCENE_SHOW_PLAYER);
 			direction = int.MIN_VALUE;
 			currentHealth = int.MIN_VALUE;
 			maxHealth = int.MIN_VALUE;

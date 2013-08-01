@@ -22,8 +22,6 @@ package proxy
 	{
 		public static const NAME: String = "ServerListProxy";
 		
-		public static const SERVER_LIST: uint = 0x0001;
-		
 		public function ServerListProxy(data:Object=null)
 		{
 			super(NAME, data);

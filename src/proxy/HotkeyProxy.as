@@ -3,6 +3,7 @@ package proxy
 	import com.xgame.common.commands.CommandList;
 	import com.xgame.common.commands.receiving.Receive_Info_RequestHotkey;
 	import com.xgame.common.commands.sending.Send_Info_RequestHotkey;
+	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.core.center.HotkeyCenter;
 	import com.xgame.utils.Int64;
@@ -20,8 +21,6 @@ package proxy
 	{
 		public static const NAME: String = "HotkeyProxy";
 		
-		private static const REQUEST_HOTKEY: uint = 0x0060;
-		
 		public function HotkeyProxy(data:Object=null)
 		{
 			super(NAME, data);
@@ -33,8 +32,8 @@ package proxy
 			var _request: Send_Info_RequestHotkey = new Send_Info_RequestHotkey();
 			_request.accountId = _proxy.accountId;
 			
-			CommandList.instance.bind(REQUEST_HOTKEY, Receive_Info_RequestHotkey);
-			CommandCenter.instance.add(REQUEST_HOTKEY, onRequestHotkey);
+			CommandList.instance.bind(SocketContextConfig.REQUEST_HOTKEY, Receive_Info_RequestHotkey);
+			CommandCenter.instance.add(SocketContextConfig.REQUEST_HOTKEY, onRequestHotkey);
 			
 			CommandCenter.instance.send(_request);
 		}
