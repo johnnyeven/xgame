@@ -1,5 +1,6 @@
 package controllers.init
 {
+	import com.xgame.common.behavior.MainPlayerBehavior;
 	import com.xgame.common.commands.receiving.ReceivingBase;
 	import com.xgame.common.commands.sending.Send_Move_RequestFindPath;
 	import com.xgame.common.display.BitmapDisplay;
@@ -11,7 +12,9 @@ package controllers.init
 	import com.xgame.core.center.HotkeyCenter;
 	import com.xgame.core.map.Map;
 	import com.xgame.core.scene.Scene;
+	import com.xgame.enum.Action;
 	import com.xgame.events.scene.InteractionEvent;
+	import com.xgame.utils.debug.Debug;
 	import com.xgame.utils.manager.TimerManager;
 	
 	import flash.geom.Point;
@@ -89,6 +92,9 @@ package controllers.init
 				protocol.endY = endPoint.y;
 				
 				CommandCenter.instance.send(protocol);
+				
+				var node1: Array = Map.instance.astar.find(Scene.instance.player.positionX, Scene.instance.player.positionY, endPoint.x, endPoint.y);
+				Debug.info(this, "自己计算的path=" + node1);
 			}
 		}
 	}

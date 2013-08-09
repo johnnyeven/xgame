@@ -1,9 +1,12 @@
 package proxy.interaction
 {
+	import com.xgame.common.behavior.MainPlayerBehavior;
 	import com.xgame.common.commands.CommandList;
 	import com.xgame.common.commands.receiving.Receive_Move_RequestFindPath;
+	import com.xgame.common.display.MainPlayerDisplay;
 	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
+	import com.xgame.core.scene.Scene;
 	
 	import org.puremvc.as3.interfaces.IProxy;
 	import org.puremvc.as3.patterns.proxy.Proxy;
@@ -22,7 +25,9 @@ package proxy.interaction
 		
 		private function onRequestFindPath(protocol: Receive_Move_RequestFindPath): void
 		{
-			
+			var player: MainPlayerDisplay = Scene.instance.player;
+			var behavior: MainPlayerBehavior = player.behavior as MainPlayerBehavior;
+//			behavior.move(protocol.path);
 		}
 	}
 }
