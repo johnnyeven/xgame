@@ -92,9 +92,7 @@ package controllers.init
 				protocol.endY = endPoint.y;
 				
 				CommandCenter.instance.send(protocol);
-				
-				var node1: Array = Map.instance.astar.find(Scene.instance.player.positionX, Scene.instance.player.positionY, endPoint.x, endPoint.y);
-				Debug.info(this, "自己计算的path=" + node1);
+				Debug.info(this, "start x=" + Scene.instance.player.positionX + ", y=" + Scene.instance.player.positionY + ", end x=" + endPoint.x + ", y=" + endPoint.y);
 			}
 		}
 	}

@@ -27,7 +27,7 @@ package proxy.interaction
 		{
 			var player: MainPlayerDisplay = Scene.instance.player;
 			var behavior: MainPlayerBehavior = player.behavior as MainPlayerBehavior;
-//			behavior.move(protocol.path);
+			behavior.move(protocol.path);
 		}
 	}
 }
