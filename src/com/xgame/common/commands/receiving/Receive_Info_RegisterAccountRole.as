@@ -13,6 +13,7 @@ package com.xgame.common.commands.receiving
 		public var nickName: String;
 		public var accountCash: Int64;
 		public var direction: int;
+		public var speed: Number;
 		public var currentHealth: int;
 		public var maxHealth: int;
 		public var currentMana: int;
@@ -26,6 +27,7 @@ package com.xgame.common.commands.receiving
 		{
 			super(SocketContextConfig.REGISTER_ACCOUNT_ROLE);
 			direction = int.MIN_VALUE;
+			speed = Number.MIN_VALUE;
 			currentHealth = int.MIN_VALUE;
 			maxHealth = int.MIN_VALUE;
 			currentMana = int.MIN_VALUE;
@@ -108,6 +110,12 @@ package com.xgame.common.commands.receiving
 								maxEnergy = data.readInt();
 								break;
 							}
+						case SocketContextConfig.TYPE_FLOAT:
+							if(speed == Number.MIN_VALUE)
+							{
+								speed = data.readFloat();
+								break;
+							}
 						case SocketContextConfig.TYPE_DOUBLE:
 							if(x == Number.MIN_VALUE)
 							{
@@ -119,15 +127,9 @@ package com.xgame.common.commands.receiving
 								y = data.readDouble();
 								break;
 							}
-							break;
 					}
 				}
 			}
-		}
-		
-		override public function get protocolName():String
-		{
-			return "Receive_Info_RegisterAccountRole";
 		}
 	}
 }

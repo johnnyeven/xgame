@@ -8,6 +8,7 @@ package proxy
 	import com.xgame.common.display.PlayerDisplay;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
+	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.configuration.SocketContextConfig;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.core.scene.Scene;
@@ -46,7 +47,7 @@ package proxy
 		private function onPlayerShow(protocol: Receive_Scene_ShowPlayer): void
 		{
 			var _player: PlayerDisplay = new PlayerDisplay();
-			_player.speed = 7;
+			_player.speed = protocol.speed / GlobalContextConfig.FrameRate;
 			_player.positionX = protocol.x;
 			_player.positionY = protocol.y;
 			_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");

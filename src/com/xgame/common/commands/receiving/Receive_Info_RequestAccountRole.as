@@ -13,27 +13,29 @@ package com.xgame.common.commands.receiving
 		public var nickName: String;
 		public var accountCash: Int64;
 		public var direction: int;
+		public var speed: Number;
 		public var currentHealth: int;
 		public var maxHealth: int;
 		public var currentMana: int;
 		public var maxMana: int;
 		public var currentEnergy: int;
 		public var maxEnergy: int;
-		public var x: int;
-		public var y: int;
+		public var x: Number;
+		public var y: Number;
 		
 		public function Receive_Info_RequestAccountRole()
 		{
 			super(SocketContextConfig.REQUEST_ACCOUNT_ROLE);
 			direction = int.MIN_VALUE;
+			speed = Number.MIN_VALUE;
 			currentHealth = int.MIN_VALUE;
 			maxHealth = int.MIN_VALUE;
 			currentMana = int.MIN_VALUE;
 			maxMana = int.MIN_VALUE;
 			currentEnergy = int.MIN_VALUE;
 			maxEnergy = int.MIN_VALUE;
-			x = int.MIN_VALUE;
-			y = int.MIN_VALUE;
+			x = Number.MIN_VALUE;
+			y = Number.MIN_VALUE;
 		}
 		
 		override public function fill(data:ByteArray):void
@@ -108,24 +110,26 @@ package com.xgame.common.commands.receiving
 								maxEnergy = data.readInt();
 								break;
 							}
-							if(x == int.MIN_VALUE)
+						case SocketContextConfig.TYPE_FLOAT:
+							if(speed == Number.MIN_VALUE)
 							{
-								x = data.readInt();
+								speed = data.readFloat();
 								break;
 							}
-							if(y == int.MIN_VALUE)
+						case SocketContextConfig.TYPE_DOUBLE:
+							if(x == Number.MIN_VALUE)
 							{
-								y = data.readInt();
+								x = data.readDouble();
+								break;
+							}
+							if(y == Number.MIN_VALUE)
+							{
+								y = data.readDouble();
 								break;
 							}
 					}
 				}
 			}
-		}
-		
-		override public function get protocolName():String
-		{
-			return "Receive_Info_RequestAccountRole";
 		}
 	}
 }

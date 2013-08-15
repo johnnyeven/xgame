@@ -7,6 +7,7 @@ package controllers.init
 	import com.xgame.common.display.MainPlayerDisplay;
 	import com.xgame.common.display.renders.Render;
 	import com.xgame.common.pool.ResourcePool;
+	import com.xgame.configuration.GlobalContextConfig;
 	import com.xgame.core.Camera;
 	import com.xgame.core.center.CommandCenter;
 	import com.xgame.core.center.HotkeyCenter;
@@ -64,7 +65,7 @@ package controllers.init
 				if(_protocol != null)
 				{
 					var _player: MainPlayerDisplay = new MainPlayerDisplay();
-					_player.speed = 7;
+					_player.speed = _protocol.speed / GlobalContextConfig.FrameRate;
 					_player.positionX = _protocol.x;
 					_player.positionY = _protocol.y;
 					_player.graphic = ResourcePool.instance.getResourceData("assets.character.char4");
