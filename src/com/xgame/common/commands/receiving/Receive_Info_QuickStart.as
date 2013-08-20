@@ -40,8 +40,8 @@ package com.xgame.common.commands.receiving
 							if (GUID == null)
 							{
 								GUID = new Int64();
-								GUID.low = bytes.readUnsignedInt();
 								GUID.high = bytes.readInt();
+								GUID.low = bytes.readUnsignedInt();
 							}
 							break;
 						case SocketContextConfig.TYPE_STRING:

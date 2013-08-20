@@ -56,15 +56,15 @@ package com.xgame.common.commands.receiving
 							if (accountId == null)
 							{
 								accountId = new Int64();
-								accountId.low = data.readUnsignedInt();
 								accountId.high = data.readInt();
+								accountId.low = data.readUnsignedInt();
 								break;
 							}
 							if(accountCash == null)
 							{
 								accountCash = new Int64();
-								accountCash.low = data.readUnsignedInt();
 								accountCash.high = data.readInt();
+								accountCash.low = data.readUnsignedInt();
 								break;
 							}
 						case SocketContextConfig.TYPE_STRING:

@@ -18,8 +18,8 @@ package com.xgame.common.commands.sending
 			
 			_byteData.writeInt(8);
 			_byteData.writeByte(SocketContextConfig.TYPE_LONG);
-			_byteData.writeUnsignedInt(GUID.low);
 			_byteData.writeInt(GUID.high);
+			_byteData.writeUnsignedInt(GUID.low);
 		}
 		
 		override public function get protocolName():String
