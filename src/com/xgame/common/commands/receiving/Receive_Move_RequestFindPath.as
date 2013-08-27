@@ -25,7 +25,7 @@ package com.xgame.common.commands.receiving
 				var x: int = int.MIN_VALUE;
 				var y: int = int.MIN_VALUE;
 				path = new Array();
-				while (data.bytesAvailable)
+				while (data.bytesAvailable > 8)
 				{
 					length = data.readInt();
 					type = data.readByte();

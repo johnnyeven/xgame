@@ -30,7 +30,7 @@ package com.xgame.common.commands.receiving
 			{
 				var length: int;
 				var type: int;
-				while (bytes.bytesAvailable)
+				while (bytes.bytesAvailable > 8)
 				{
 					length = bytes.readInt();
 					type = bytes.readByte();

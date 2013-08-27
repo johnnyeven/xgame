@@ -24,7 +24,7 @@ package com.xgame.common.commands.receiving
 			{
 				var length: int;
 				var type: int;
-				while (data.bytesAvailable)
+				while (data.bytesAvailable > 8)
 				{
 					length = data.readInt();
 					type = data.readByte();
